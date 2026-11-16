@@ -1,0 +1,55 @@
+name: Publish Engineering Codex to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Verify and package public site
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate public content registry
+        run: python3 scripts/validate.py
+      - name: Test simulated terminal
+        run: node --test tests/*.test.mjs
+      - name: Compile and run pointer example
+        run: |
+          cc -std=c17 -Wall -Wextra -Wpedantic -Werror pilot/labs/pointer_demo.c -o /tmp/pointer_demo
+          test "$(/tmp/pointer_demo)" = "$(printf '42\n73')"
+      - name: Package allowlisted site files only
+        run: python3 scripts/build_pages.py
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    name: Deploy public preview
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
