@@ -1,0 +1,343 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://engineering-codex.invalid/schema/content-v0.1.json",
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "status",
+        "locator"
+      ],
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "verified",
+            "reported",
+            "historical_unverified",
+            "proposed",
+            "unknown"
+          ]
+        },
+        "locator": {
+          "type": "string"
+        },
+        "revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "checked_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "kind",
+        "url",
+        "visibility",
+        "verification",
+        "course_refs"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "visibility": {
+          "enum": [
+            "public",
+            "private",
+            "restricted"
+          ]
+        },
+        "verification": {
+          "type": "string"
+        },
+        "license": {
+          "enum": [
+            "public_domain",
+            "permissive",
+            "rights_cleared",
+            "unknown",
+            "restricted"
+          ]
+        },
+        "last_checked": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "course_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "course": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "institution",
+        "topics",
+        "sources",
+        "personal_status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "institution": {
+          "type": "string"
+        },
+        "year": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 4
+        },
+        "semester": {
+          "enum": [
+            "A",
+            "B",
+            "summer",
+            "unknown"
+          ]
+        },
+        "personal_status": {
+          "enum": [
+            "unknown",
+            "reported_completed",
+            "reported_active",
+            "verified_completed",
+            "planned",
+            "not_applicable"
+          ]
+        },
+        "topics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        }
+      }
+    },
+    "concept": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "level",
+        "requires",
+        "related",
+        "sources",
+        "review_state"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "level": {
+          "enum": [
+            "beginner",
+            "intermediate",
+            "advanced",
+            "professional"
+          ]
+        },
+        "requires": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "related": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "courses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "chapter_path": {
+          "type": "string"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        },
+        "review_state": {
+          "enum": [
+            "draft",
+            "source_checked",
+            "code_tested",
+            "reviewed",
+            "approved",
+            "published"
+          ]
+        }
+      }
+    },
+    "assignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "course_id",
+        "visibility",
+        "solution_policy",
+        "topics",
+        "evidence"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "course_id": {
+          "type": "string"
+        },
+        "visibility": {
+          "enum": [
+            "private",
+            "public"
+          ]
+        },
+        "solution_policy": {
+          "enum": [
+            "private_until_permitted",
+            "public_adapted",
+            "public_original_authorized"
+          ]
+        },
+        "topics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "repo_url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        }
+      }
+    },
+    "lab": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "concept_ids",
+        "mode",
+        "test_status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "concept_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mode": {
+          "enum": [
+            "static_simulation",
+            "wasm_sandbox",
+            "external_runner",
+            "local_build"
+          ]
+        },
+        "test_status": {
+          "enum": [
+            "proposed",
+            "implemented_unverified",
+            "unit_tested",
+            "browser_tested",
+            "device_tested"
+          ]
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
