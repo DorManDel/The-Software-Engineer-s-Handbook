@@ -1,0 +1,26 @@
+name: Verify Engineering Codex
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  content-and-labs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify public-safe content inventory
+        run: python3 scripts/validate.py
+      - name: Test simulated terminal engine
+        run: node --test tests/*.test.mjs
+      - name: Compile and execute C17 pointer sample
+        run: |
+          cc -std=c17 -Wall -Wextra -Wpedantic -Werror pilot/labs/pointer_demo.c -o /tmp/pointer_demo
+          test "$(/tmp/pointer_demo)" = "$(printf '42\n73')"
+      - name: Static syntax checks
+        run: |
+          node --check src/terminal-engine.mjs
+          node --check src/app.mjs

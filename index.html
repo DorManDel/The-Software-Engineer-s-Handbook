@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0c0b19" />
+  <meta name="description" content="Engineering Codex: a source-backed software engineering handbook with interactive labs, courses and practical terminal challenges." />
+  <title>Engineering Codex · The Software Engineer's Handbook</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script type="module" src="./src/app.mjs"></script>
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+  <div class="app-shell">
+    <aside class="sidebar glass" aria-label="Primary navigation">
+      <a class="brand" href="#home" data-nav="home"><span class="brand-symbol">&lt;/&gt;</span><span><strong>Engineering<br />Codex</strong><small>THE HANDBOOK</small></span></a>
+      <div class="sidebar-section-label">YOUR ACADEMY</div>
+      <nav class="nav-list" aria-label="Sections">
+        <a href="#home" class="nav-link active" data-nav="home"><span>◈</span> Overview</a>
+        <a href="#curriculum" class="nav-link" data-nav="curriculum"><span>▦</span> Degree Explorer</a>
+        <a href="#terminal" class="nav-link" data-nav="terminal"><span>⌘</span> Terminal Academy <span class="nav-new">LAB</span></a>
+        <a href="#pointers" class="nav-link" data-nav="pointers"><span>{ }</span> C Memory Lab</a>
+        <a href="#sources" class="nav-link" data-nav="sources"><span>↗</span> Source Registry</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <p class="sidebar-note"><span class="status-dot"></span> Milestone 0.1 — public preview</p>
+        <p class="muted tiny">Open learning, verified sources, safe experiments. Personal materials remain private.</p>
+        <a href="https://github.com/DorManDel/The-Software-Engineer-s-Handbook" target="_blank" rel="noopener noreferrer" class="repo-link">GitHub repository ↗</a>
+      </div>
+    </aside>
+
+    <div class="main-area">
+      <header class="topbar glass">
+        <a href="#home" class="mobile-brand">&lt;/&gt; <strong>ENGINEERING CODEX</strong></a>
+        <div class="topbar-text">FROM FIRST LINE OF CODE TO PROFESSIONAL ENGINEERING</div>
+        <span class="top-tag">PREVIEW · M0.1</span>
+      </header>
+      <main id="main" tabindex="-1">
+        <section class="view active" id="view-home" aria-labelledby="home-title">
+          <div class="eyebrow"><span class="accent-dot"></span> THE SOFTWARE ENGINEER'S HANDBOOK <span class="eyebrow-line"></span> AN OPEN LEARNING JOURNEY</div>
+          <div class="hero">
+            <div class="hero-copy">
+              <h1 id="home-title">Build the foundations.<br /><em>Understand the systems.</em></h1>
+              <p>Study software engineering from first principles to real-world practice. Explore your degree, connect concepts, and master the tools engineers use every day.</p>
+              <div class="button-row"><button type="button" class="button primary" data-goto="terminal">Launch Terminal Academy <span>↗</span></button><button type="button" class="button ghost" data-goto="curriculum">Explore curriculum <span>→</span></button></div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+              <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="orb"></div>
+              <div class="float-card float-one"><span>01</span><strong>LEARN</strong><small>Foundations</small></div>
+              <div class="float-card float-two"><span>02</span><strong>BUILD</strong><small>Real systems</small></div>
+              <div class="float-card float-three"><span>03</span><strong>MASTER</strong><small>Engineering</small></div>
+            </div>
+          </div>
+          <div class="section-title"><div><span class="eyebrow">MILESTONE 0</span><h2>Explore the foundation</h2></div><span class="muted small">Source-backed · Interactive · Extensible</span></div>
+          <div class="feature-grid">
+            <button type="button" class="feature-card glass" data-goto="curriculum"><span class="card-icon">▦</span><span class="feature-title">Degree Explorer</span><span class="feature-desc">Official four-year curriculum, preserved with provenance and verified schedule rows.</span><span class="feature-bottom"><span id="course-stat">56 schedule entries</span><span>↗</span></span></button>
+            <button type="button" class="feature-card glass" data-goto="terminal"><span class="card-icon yellow">⌘</span><span class="feature-title">Terminal Academy</span><span class="feature-desc">Practice Linux, PowerShell and WSL concepts in a safe virtual workspace.</span><span class="feature-bottom"><span>3 interactive missions</span><span>↗</span></span></button>
+            <button type="button" class="feature-card glass" data-goto="pointers"><span class="card-icon">{ }</span><span class="feature-title">C Memory Explorer</span><span class="feature-desc">Learn values, addresses and dereferencing with an explicitly symbolic memory model.</span><span class="feature-bottom"><span>First pilot chapter</span><span>↗</span></span></button>
+            <button type="button" class="feature-card glass" data-goto="sources"><span class="card-icon yellow">↗</span><span class="feature-title">Evidence & Sources</span><span class="feature-desc">Trace concepts to published curricula, reference documents and public repository metadata.</span><span class="feature-bottom"><span>Public sources only</span><span>↗</span></span></button>
+          </div>
+          <div class="footnote">This is a prototype of the educational experience, not a full course import. Course completion and personal academic records are intentionally not shown.</div>
+        </section>
+
+        <section class="view" id="view-curriculum" aria-labelledby="curriculum-title">
+          <div class="eyebrow">DEGREE EXPLORER / OFFICIAL CURRICULUM</div>
+          <h1 id="curriculum-title">The four-year <em>learning map.</em></h1>
+          <p class="section-lead">Browse Shenkar's published Software Engineering schedule. Entries may repeat across semesters and do not assert personal completion.</p>
+          <div class="toolbar glass"><div class="year-filter" id="year-filter" role="group" aria-label="Academic year"><button class="filter-btn selected" data-year="all">All years</button><button class="filter-btn" data-year="1">Year 1</button><button class="filter-btn" data-year="2">Year 2</button><button class="filter-btn" data-year="3">Year 3</button><button class="filter-btn" data-year="4">Year 4</button></div><label class="search-field"><span aria-hidden="true">⌕</span><span class="sr-only">Search courses</span><input id="course-search" type="search" placeholder="Find a course…" /></label></div>
+          <div id="curriculum-count" class="muted small result-count" aria-live="polite"></div>
+          <div id="curriculum-list" class="curriculum-list"></div>
+          <p class="footnote">Official curriculum source: <a href="https://www.shenkar.ac.il/engineering/bachelors/software_engineering/curriculum/" target="_blank" rel="noopener noreferrer">Shenkar Software Engineering B.Sc. ↗</a>. English titles are editorial translations.</p>
+        </section>
+
+        <section class="view" id="view-terminal" aria-labelledby="terminal-title">
+          <div class="eyebrow">INTERACTIVE LAB 001 / SYSTEMS PROGRAMMING</div>
+          <h1 id="terminal-title">The <em>Terminal Academy.</em></h1>
+          <p class="section-lead">Learn by doing. Switch between modeled Ubuntu (WSL) and PowerShell, navigate a virtual filesystem, and complete authentic-feeling exercises.</p>
+          <div class="notice"><strong>SIMULATION ONLY</strong><span>No real shell commands are executed. Files exist only in the browser's in-memory lesson state. This is a teaching subset, not full Bash or PowerShell.</span></div>
+          <div class="terminal-header-tools"><div class="mode-tabs" role="group" aria-label="Simulated terminal environment"><button type="button" data-mode="linux" class="mode-btn selected">Ubuntu / WSL</button><button type="button" data-mode="powershell" class="mode-btn">PowerShell</button></div><button type="button" class="button small ghost" id="terminal-reset">↺ Reset environment</button></div>
+          <div class="terminal-layout">
+            <div class="terminal-card glass">
+              <div class="terminal-chrome"><div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div><strong id="terminal-window-title">ubuntu@simulated-vm</strong><span class="window-pill">IN-MEMORY</span></div>
+              <div id="terminal-output" role="log" aria-live="polite" aria-label="Simulated terminal history" class="terminal-output" tabindex="0"></div>
+              <form id="terminal-form" class="terminal-form" autocomplete="off"><label for="terminal-input" id="terminal-prompt">student@ubuntu:~$</label><input type="text" id="terminal-input" name="command" aria-label="Type a simulated terminal command" placeholder="Type help or pwd…" spellcheck="false" maxlength="500" /><button type="submit" aria-label="Run simulated command">↵</button></form>
+            </div>
+            <aside class="mission-card glass" aria-labelledby="mission-heading">
+              <div class="mission-top"><span class="eyebrow">GUIDED MISSIONS</span><span class="mission-counter" id="mission-counter">0 / 3</span></div>
+              <label for="challenge-select" class="field-label">Choose a mission</label>
+              <select id="challenge-select" aria-label="Choose terminal mission"></select>
+              <h2 id="mission-heading">Linux: explore and organize</h2>
+              <p id="mission-description" class="muted small"></p>
+              <div id="challenge-steps" class="challenge-steps" aria-live="polite"></div>
+              <details class="hint"><summary>Need a hint?</summary><code id="mission-hint"></code></details>
+              <div class="field-label">TRY A COMMAND</div>
+              <div id="terminal-examples" class="example-chips"></div>
+            </aside>
+          </div>
+          <div class="lesson-grid">
+            <article class="lesson-card glass"><span class="eyebrow">UNDERSTAND THE DIFFERENCE</span><h3>Windows host vs Linux guest</h3><p>PowerShell commands run in the Windows shell. <code>wsl.exe</code> starts or invokes Linux through Windows Subsystem for Linux. Once inside Ubuntu, <code>ls</code>, <code>pwd</code>, <code>cd</code> and Linux paths apply.</p><a target="_blank" rel="noopener noreferrer" href="https://learn.microsoft.com/en-us/windows/wsl/basic-commands">Microsoft WSL reference ↗</a></article>
+            <article class="lesson-card glass"><span class="eyebrow">LEARN THE BOUNDARIES</span><h3>Not a substitute for real WSL</h3><p>The simulator purposely omits programs such as <code>gcc</code>, pipes, processes, permissions, and real Linux filesystems. Later lessons will support a controlled local WSL companion without executing untrusted code on our website server.</p><a target="_blank" rel="noopener noreferrer" href="https://learn.microsoft.com/en-us/windows/wsl/interop">WSL interop guide ↗</a></article>
+          </div>
+        </section>
+
+        <section class="view" id="view-pointers" aria-labelledby="pointers-title">
+          <div class="eyebrow">INTERACTIVE LAB 002 / C PROGRAMMING</div>
+          <h1 id="pointers-title">Pointers, <em>made visible.</em></h1>
+          <p class="section-lead">A variable stores a value. A pointer stores an address that can designate an object. Explore their relationship without touching real process memory.</p>
+          <div class="notice"><strong>SYMBOLIC MEMORY</strong><span>The illustrative address <code>0x1000</code> is not a true machine address; the model demonstrates pointer semantics.</span></div>
+          <div class="pointer-layout"><div class="glass pointer-panel"><div class="field-label">MEMORY SNAPSHOT · STATIC TEACHING MODEL</div><div class="memory-cards"><div class="memory-cell"><span>OBJECT · x</span><strong id="pointer-value">42</strong><code>0x1000</code></div><div class="pointer-arrow" id="pointer-arrow">↔</div><div class="memory-cell accent-cell"><span>POINTER · ptr</span><strong id="pointer-address">0x1000</strong><code id="dereference-label">*ptr = 42</code></div></div><label class="field-label" for="value-slider">Change x: <output id="slider-value">42</output></label><input id="value-slider" type="range" min="0" max="100" value="42" /><label class="checkline"><input type="checkbox" id="pointer-connected" checked /> ptr points to x</label></div><div class="glass pointer-panel"><div class="field-label">LIVE-GENERATED C CODE</div><pre id="pointer-code" class="code-pane"></pre><div class="field-label">KNOWLEDGE CHECK</div><p class="small">When x changes, what does <code>*ptr</code> read, assuming ptr still points to x?</p><div class="quiz-row"><button class="quiz-button" data-answer="old">The old value</button><button class="quiz-button" data-answer="current">The current value</button></div><p id="quiz-feedback" class="muted small" role="status"></p></div></div>
+          <p class="footnote">Chapter status: draft pilot. C17 sample code and a stronger chapter review are tracked in <code>pilot/</code>. Never dereference a null pointer.</p>
+        </section>
+
+        <section class="view" id="view-sources" aria-labelledby="sources-title">
+          <div class="eyebrow">SOURCE REGISTRY / PUBLIC EVIDENCE ONLY</div>
+          <h1 id="sources-title">Learn with <em>traceable evidence.</em></h1>
+          <p class="section-lead">Public source references only. A discovered repository isn't equivalent to a verified chapter; content review and redistribution permissions are separate checks.</p>
+          <div id="sources-count" class="muted result-count"></div>
+          <div class="source-grid" id="source-grid"></div>
+          <p class="footnote">Private class folders, personal transcript, restricted lecture PDFs and local inventories are intentionally excluded from this public preview.</p>
+        </section>
+      </main>
+      <footer class="footer"><span>ENGINEERING CODEX · FOUNDATION BUILD</span><span>Learn → Experiment → Connect → Build</span></footer>
+    </div>
+  </div>
+</body>
+</html>

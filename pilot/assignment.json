@@ -1,0 +1,23 @@
+{
+  "id": "sysprog-mycp",
+  "title": "my_cp — Robust File Copy",
+  "course_id": "systems-programming",
+  "visibility": "private",
+  "solution_policy": "private_until_permitted",
+  "topics": [
+    "c-pointers-and-addresses",
+    "c-dynamic-memory",
+    "posix-file-descriptors",
+    "robust-io"
+  ],
+  "repo_url": "https://github.com/DorManDel/SysProg-ex1",
+  "evidence": [
+    {
+      "source_id": "repo-sysprog-ex1",
+      "status": "verified",
+      "locator": "README.md; argument, malloc/free, open/read/write and cleanup requirements",
+      "revision": null,
+      "checked_at": "2026-11-16"
+    }
+  ]
+}

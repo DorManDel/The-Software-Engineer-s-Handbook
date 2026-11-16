@@ -1,0 +1,12 @@
+# Never commit private academic records, secrets or restricted course materials
+/data/private/
+.env
+.env.*
+!.env.example
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Generated public Pages artifact
+_site/

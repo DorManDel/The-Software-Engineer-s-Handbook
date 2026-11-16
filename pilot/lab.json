@@ -1,0 +1,14 @@
+{
+  "id": "c-memory-explorer",
+  "title": "C Memory and Pointer Explorer",
+  "concept_ids": [
+    "c-pointers-and-addresses"
+  ],
+  "mode": "static_simulation",
+  "test_status": "proposed",
+  "limitations": [
+    "Symbolic addresses are illustrations, not real process addresses",
+    "Stack/heap layout is implementation-dependent",
+    "No user-supplied code execution until isolated runner is built"
+  ]
+}
