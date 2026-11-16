@@ -141,3 +141,145 @@ $$('[data-answer]').forEach(b=>b.addEventListener('click',()=>{
   $('#quiz-feedback').className=`small ${correct?'correct-answer':'muted'}`;
 }));
 renderPointers();
+
+// Atelier motion layer — decorative only. The learning simulation is unaffected.
+// Animations are composited and limited to visible, interactive UI; no third-party runtime.
+(function setupAtelierMotion() {
+  const masthead = document.getElementById('masthead');
+  const toggle = document.getElementById('motion-toggle');
+  const heroArt = document.getElementById('hero-art');
+  const studio = document.getElementById('art-studio');
+  const reduceQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const motionKey = 'engineering-codex:motion-paused:v1';
+  let chosenPaused = false;
+  try { chosenPaused = window.localStorage.getItem(motionKey) === 'true'; } catch { /* storage optional */ }
+  let suspended = document.hidden;
+  let pointerActive = false;
+  let frame = 0;
+  let currentX = 0;
+  let currentY = 0;
+  let targetX = 0;
+  let targetY = 0;
+
+  const inactive = () => reduceQuery.matches || chosenPaused || suspended;
+  const syncMotion = () => {
+    const paused = inactive();
+    document.body.classList.toggle('motion-paused', paused);
+    document.documentElement.classList.toggle('motion-enhanced', !paused);
+    toggle.setAttribute('aria-pressed', String(paused));
+    toggle.querySelector('.motion-label').textContent = reduceQuery.matches ? 'Reduced motion' : paused ? 'Motion off' : 'Motion on';
+    toggle.setAttribute('aria-label', reduceQuery.matches ? 'Motion reduced by system preference' : paused ? 'Resume decorative animations' : 'Pause decorative animations');
+    toggle.title = toggle.getAttribute('aria-label');
+    toggle.disabled = reduceQuery.matches;
+    if (paused) resetTilt();
+  };
+  const resetTilt = () => {
+    pointerActive = false;
+    targetX = 0; targetY = 0;
+    if (!frame && !inactive()) frame = window.requestAnimationFrame(animateTilt);
+    else if (inactive()) {
+      window.cancelAnimationFrame(frame); frame = 0;
+      currentX = 0; currentY = 0;
+      heroArt.style.setProperty('--rx', '0deg');
+      heroArt.style.setProperty('--ry', '0deg');
+      studio.style.setProperty('--mx', '50%');
+      studio.style.setProperty('--my', '50%');
+    }
+  };
+  function animateTilt() {
+    frame = 0;
+    if (inactive()) return;
+    currentX += (targetX - currentX) * .14;
+    currentY += (targetY - currentY) * .14;
+    heroArt.style.setProperty('--ry', `${currentX.toFixed(2)}deg`);
+    heroArt.style.setProperty('--rx', `${currentY.toFixed(2)}deg`);
+    if (Math.abs(targetX - currentX) > .07 || Math.abs(targetY - currentY) > .07) {
+      frame = window.requestAnimationFrame(animateTilt);
+    }
+  }
+
+  toggle.addEventListener('click', () => {
+    if (reduceQuery.matches) return;
+    chosenPaused = !chosenPaused;
+    try { window.localStorage.setItem(motionKey, String(chosenPaused)); } catch { /* best effort */ }
+    syncMotion();
+  });
+  const pointerFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (pointerFine) {
+    heroArt.addEventListener('pointermove', event => {
+      if (inactive()) return;
+      const rect = heroArt.getBoundingClientRect();
+      const dx = (event.clientX - rect.left) / rect.width - .5;
+      const dy = (event.clientY - rect.top) / rect.height - .5;
+      targetX = dx * 12;
+      targetY = dy * -12;
+      pointerActive = true;
+      studio.style.setProperty('--mx', `${Math.round((dx + .5) * 100)}%`);
+      studio.style.setProperty('--my', `${Math.round((dy + .5) * 100)}%`);
+      if (!frame) frame = window.requestAnimationFrame(animateTilt);
+    }, { passive: true });
+    heroArt.addEventListener('pointerleave', resetTilt, { passive: true });
+    document.querySelectorAll('.feature-card').forEach(card => {
+      let pending = 0;
+      card.addEventListener('pointermove', event => {
+        if (inactive() || pending) return;
+        const x = event.clientX, y = event.clientY;
+        pending = window.requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty('--px', `${x - rect.left}px`);
+          card.style.setProperty('--py', `${y - rect.top}px`);
+          pending = 0;
+        });
+      }, { passive: true });
+    });
+    // Dynamic curriculum/source cards are created after JSON loads; delegate the
+    // highlight through their stable container so new cards get the same effect.
+    for (const containerId of ['curriculum-list', 'source-grid']) {
+      const container = document.getElementById(containerId);
+      let pending = 0;
+      container.addEventListener('pointermove', event => {
+        if (inactive() || pending) return;
+        const card = event.target.closest('.course-card, .source-card');
+        if (!card) return;
+        const x = event.clientX, y = event.clientY;
+        pending = window.requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty('--px', `${x - rect.left}px`);
+          card.style.setProperty('--py', `${y - rect.top}px`);
+          pending = 0;
+        });
+      }, { passive:true });
+    }
+  }
+
+  let scrollFrame = 0;
+  const onScroll = () => {
+    if (scrollFrame) return;
+    scrollFrame = window.requestAnimationFrame(() => {
+      masthead.classList.toggle('scrolled', window.scrollY > 24);
+      scrollFrame = 0;
+    });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  document.addEventListener('visibilitychange', () => { suspended = document.hidden; syncMotion(); });
+  if (reduceQuery.addEventListener) reduceQuery.addEventListener('change', syncMotion);
+  else if (reduceQuery.addListener) reduceQuery.addListener(syncMotion);
+
+  const revealCards = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .08, rootMargin: '0px 0px -25px 0px' });
+    revealCards.forEach((card, index) => {
+      card.style.transitionDelay = `${Math.min(index * 75, 225)}ms`;
+      observer.observe(card);
+    });
+  } else revealCards.forEach(card => card.classList.add('is-visible'));
+  syncMotion();
+})();
