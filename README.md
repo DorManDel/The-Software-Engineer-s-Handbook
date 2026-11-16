@@ -55,27 +55,6 @@ cc -std=c17 -Wall -Wextra -Wpedantic -Werror pilot/labs/pointer_demo.c -o /tmp/p
 
 See `docs/PILOT_PLAN.md`, `docs/PCM_INTEGRATION.md`, and `docs/TERMINAL_ACADEMY.md`. The next learning module expands the virtual shell with process concepts (`fork`/`exec`/FDs) as *visual state machines*, followed by a controlled optional local companion for real WSL practice.
 
-## GitHub Pages publishing
+## Atelier R1 visual redesign (review branch)
 
-The public web app is configured for publishing from `main` using `.github/workflows/pages.yml`.
-Deployment packages an explicit allowlist via `python3 scripts/build_pages.py`
-into `_site/`; it does **not** publish the repository root, course PDFs,
-unreviewed draft assignments, `docs/`, `pilot/` or private source registries.
-
-**One-time owner setup:** In repository **Settings → Pages → Build and deployment**,
-choose **Source: GitHub Actions**. The deployment workflow runs after a push to
-`main` (or can be dispatched manually). No custom domain is required.
-
-The default public Pages URL is expected to be:
-`https://dormandel.github.io/The-Software-Engineer-s-Handbook/`.
-Treat this as a proposed URL until GitHub Pages reports a successful deployment.
-
-For a local equivalent of the published artifact:
-
-```bash
-python3 scripts/validate.py
-node --test tests/*.test.mjs
-python3 scripts/build_pages.py
-cd _site
-python3 -m http.server 8000
-```
+A portfolio-inspired editorial redesign of the public teaching interface is proposed in `feat/portfolio-inspired-design-r1`. It uses a cool ocean palette, refined display typography, restrained frosted glass, a motion-reactive CSS sculpture, and accessible reduced-motion controls. The underlying terminal and pointer logic is unchanged. See `docs/ATELIER_DESIGN_R1.md` for design sources, performance boundaries and review gates. The live Pages site remains on `main` until explicit approval.
