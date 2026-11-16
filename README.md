@@ -57,25 +57,25 @@ See `docs/PILOT_PLAN.md`, `docs/PCM_INTEGRATION.md`, and `docs/TERMINAL_ACADEMY.
 
 ## GitHub Pages publishing
 
-The public web app is deployed from \`main\` using \`.github/workflows/pages.yml\`.
-Deployment packages an explicit allowlist via \`python3 scripts/build_pages.py\`
-into \`_site/\`; it does **not** publish the repository root, course PDFs,
-unreviewed draft assignments, \`docs/\`, \`pilot/\` or private source registries.
+The public web app is configured for publishing from `main` using `.github/workflows/pages.yml`.
+Deployment packages an explicit allowlist via `python3 scripts/build_pages.py`
+into `_site/`; it does **not** publish the repository root, course PDFs,
+unreviewed draft assignments, `docs/`, `pilot/` or private source registries.
 
 **One-time owner setup:** In repository **Settings → Pages → Build and deployment**,
 choose **Source: GitHub Actions**. The deployment workflow runs after a push to
-\`main\` (or can be dispatched manually). No custom domain is required.
+`main` (or can be dispatched manually). No custom domain is required.
 
 The default public Pages URL is expected to be:
-\`https://dormandel.github.io/The-Software-Engineer-s-Handbook/\`.
+`https://dormandel.github.io/The-Software-Engineer-s-Handbook/`.
 Treat this as a proposed URL until GitHub Pages reports a successful deployment.
 
 For a local equivalent of the published artifact:
 
-\`\`\`bash
+```bash
 python3 scripts/validate.py
 node --test tests/*.test.mjs
 python3 scripts/build_pages.py
 cd _site
 python3 -m http.server 8000
-\`\`\`
+```
