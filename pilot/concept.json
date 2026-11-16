@@ -1,0 +1,39 @@
+{
+  "id": "c-pointers-and-addresses",
+  "title": "Pointers and Addresses in C",
+  "level": "beginner",
+  "requires": [
+    "c-variables",
+    "c-types",
+    "c-expressions"
+  ],
+  "related": [
+    "c-arrays",
+    "c-lifetimes",
+    "c-dynamic-memory",
+    "linked-lists",
+    "buffer-overflows"
+  ],
+  "courses": [
+    "programming-1",
+    "systems-programming"
+  ],
+  "chapter_path": "pilot/chapters/c-pointers.mdx",
+  "sources": [
+    {
+      "source_id": "shenkar-c1-syllabus",
+      "status": "verified",
+      "locator": "Programming 1 syllabus topics: pointers, arrays and string library",
+      "revision": null,
+      "checked_at": "2026-11-16"
+    },
+    {
+      "source_id": "repo-sysprog-ex1",
+      "status": "verified",
+      "locator": "README sections: Memory and Resource Ownership",
+      "revision": null,
+      "checked_at": "2026-11-16"
+    }
+  ],
+  "review_state": "draft"
+}
