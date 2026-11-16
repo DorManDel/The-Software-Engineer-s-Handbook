@@ -1,0 +1,67 @@
+---
+id: c-pointers-and-addresses
+title: Pointers and Addresses in C
+level: beginner
+review_state: draft
+source_ids:
+  - shenkar-c1-syllabus
+  - repo-sysprog-ex1
+---
+
+# Pointers and Addresses in C
+
+> **DRAFT SKELETON — not a reviewed teaching chapter.**
+
+## Learning outcomes
+- Explain the difference between a value, an address, and a pointer variable.
+- Use `&`, `*`, and pointer declarations correctly.
+- Recognize valid object lifetime and unsafe dereferencing.
+- Relate pointer-based buffers to the `my_cp` systems programming assignment.
+
+## Concept and mental model
+A pointer value designates a location or is null; an object type determines how it can be accessed. We will use symbolic addresses in diagrams, clearly distinguished from actual runtime addresses.
+
+## Executable example
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int x = 42;
+    int *ptr = &x;
+    printf("%d\n", *ptr);
+    x = 73;
+    printf("%d\n", *ptr);
+    return 0;
+}
+```
+
+Expected output:
+
+```text
+42
+73
+```
+
+## Interactive lab
+`c-memory-explorer` — draw `x` and `ptr`, toggle null vs `&x`, change `x`, and test read/write effects. The UI must not imply real operating-system memory addresses.
+
+## Rules and pitfalls
+- A pointer declaration differs from dereferencing syntax.
+- Never dereference null, dangling, or otherwise invalid pointers.
+- Pointer arithmetic is defined only within appropriate array bounds.
+- Stack/heap diagrams are explanatory conventions, not a portable language requirement.
+- `malloc` allocation and `free` lifetime lead into Systems Programming.
+
+## Exercises
+1. Predict the output before running the sample.
+2. Write `increment(int *value)` with a null-handling contract.
+3. Find and fix a dangling pointer example (showing its undefined behavior without executing unsafe code).
+4. Relate the assignment's `malloc`-managed copy buffer to resource ownership.
+
+## Verification gates
+- [ ] Cite at least two relevant authoritative sources for C semantics.
+- [ ] Compile with GCC/Clang, strict warnings; check expected output.
+- [ ] Check beginner explanations and RTL/mobile rendering.
+- [ ] Review quiz answer keys and edge cases.
+- [ ] Confirm instructor material rights before publishing adapted extracts.
