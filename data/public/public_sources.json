@@ -1,0 +1,343 @@
+{
+  "as_of": "2026-11-16",
+  "sources": [
+    {
+      "id": "shenkar-curriculum",
+      "title": "Official four-year B.Sc. curriculum",
+      "kind": "institutional_web",
+      "url": "https://www.shenkar.ac.il/engineering/bachelors/software_engineering/curriculum/",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "page_content_verified",
+      "notes": "Source of 56 schedule entries (not unique courses)."
+    },
+    {
+      "id": "shenkar-c1-syllabus",
+      "title": "Programming 1 course syllabus",
+      "kind": "institutional_pdf",
+      "url": "https://www.shenkar.ac.il/wp-content/uploads/2026/02/%D7%AA%D7%9B%D7%A0%D7%95%D7%AA-1-%D7%9E%D7%91%D7%95%D7%90-%D7%9C%D7%9E%D7%93%D7%A2%D7%99-%D7%94%D7%9E%D7%97%D7%A9%D7%91.docx.pdf",
+      "course_refs": [
+        "programming-1"
+      ],
+      "visibility": "public",
+      "verification": "document_text_verified",
+      "notes": "Official topics include pointers, arrays, strings, recursion, structures, files; course code 3501865"
+    },
+    {
+      "id": "niv-study-hub",
+      "title": "Niv1999 study-hub repository",
+      "kind": "github_repository",
+      "url": "https://github.com/niv1999/study-hub",
+      "course_refs": [
+        "systems-programming"
+      ],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Repository found via GitHub search; file contents not accessible/validated in this pass."
+    },
+    {
+      "id": "niv-threads",
+      "title": "Niv1999 system programming threads reference",
+      "kind": "external_web",
+      "url": "https://niv1999.github.io/study-hub/systems-programming/topics/09-threads.html",
+      "course_refs": [
+        "systems-programming"
+      ],
+      "visibility": "public",
+      "verification": "link_from_prior_coursework_not_live_verified",
+      "notes": "User previously used this exact URL; live access was unavailable in this pass."
+    },
+    {
+      "id": "repo-ultimate-it-dashboard",
+      "title": "DorManDel/Ultimate-IT-Dashboard",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/Ultimate-IT-Dashboard",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-battleshipsgame",
+      "title": "DorManDel/BattleShipsGame",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/BattleShipsGame",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-candyfactory",
+      "title": "DorManDel/CandyFactory",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/CandyFactory",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-utils",
+      "title": "DorManDel/Utils",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/Utils",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-dor-s-profile-site",
+      "title": "DorManDel/Dor-s-Profile-Site",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/Dor-s-Profile-Site",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-html-tags",
+      "title": "DorManDel/HTML-Tags",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/HTML-Tags",
+      "course_refs": [
+        "web-cloud"
+      ],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-dorutils-cpp",
+      "title": "DorManDel/DorUtils_CPP",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/DorUtils_CPP",
+      "course_refs": [
+        "oop"
+      ],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-ascuarium",
+      "title": "DorManDel/ASCuarium",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/ASCuarium",
+      "course_refs": [
+        "intro-ai"
+      ],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-12-lead-ecg-generator-html",
+      "title": "DorManDel/12-Lead-ECG-Generator-HTML",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/12-Lead-ECG-Generator-HTML",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-dvd-logo-bounce-html",
+      "title": "DorManDel/DVD-Logo-Bounce-HTML",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/DVD-Logo-Bounce-HTML",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-dls-backend",
+      "title": "DorManDel/DLS-Backend",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/DLS-Backend",
+      "course_refs": [
+        "web-cloud"
+      ],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-randorgenerator",
+      "title": "DorManDel/RandorGenerator",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/RandorGenerator",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-boaztimer",
+      "title": "DorManDel/BoazTimer",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/BoazTimer",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-sysprog-ex1",
+      "title": "DorManDel/SysProg-ex1",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/SysProg-ex1",
+      "course_refs": [
+        "systems-programming",
+        "programming-1"
+      ],
+      "visibility": "public",
+      "verification": "readme_content_verified",
+      "notes": "README inspected"
+    },
+    {
+      "id": "repo-pokedor",
+      "title": "DorManDel/PokeDor",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/PokeDor",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-sysprog-ex2",
+      "title": "DorManDel/SysProg-ex2",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/SysProg-ex2",
+      "course_refs": [
+        "systems-programming",
+        "programming-1"
+      ],
+      "visibility": "public",
+      "verification": "readme_content_verified",
+      "notes": "README inspected"
+    },
+    {
+      "id": "repo-sysprog-ex2-alternative",
+      "title": "DorManDel/sysProg-ex2-",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/sysProg-ex2-",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-wslx",
+      "title": "DorManDel/wslx",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/wslx",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-visualarchive",
+      "title": "DorManDel/VisualArchive",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/VisualArchive",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-agentavenunity",
+      "title": "DorManDel/AgentAvenUnity",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/AgentAvenUnity",
+      "course_refs": [
+        "mobile-game-dev"
+      ],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-prismmechanic-web",
+      "title": "DorManDel/PrismMechanic_Web",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/PrismMechanic_Web",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-mobilab",
+      "title": "DorManDel/MobiLab",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/MobiLab",
+      "course_refs": [
+        "web-cloud"
+      ],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-ascean",
+      "title": "DorManDel/ASCean",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/ASCean",
+      "course_refs": [
+        "intro-ai"
+      ],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-ctrl-alt-defeat",
+      "title": "DorManDel/Ctrl-Alt-Defeat-",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/Ctrl-Alt-Defeat-",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-photo3d-engine",
+      "title": "DorManDel/Photo3D-Engine",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/Photo3D-Engine",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-medisim",
+      "title": "DorManDel/MediSim",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/MediSim",
+      "course_refs": [],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    },
+    {
+      "id": "repo-security-engineering",
+      "title": "DorManDel/Security_Engineering",
+      "kind": "github_repository",
+      "url": "https://github.com/DorManDel/Security_Engineering",
+      "course_refs": [
+        "security-engineering"
+      ],
+      "visibility": "public",
+      "verification": "repository_metadata_verified",
+      "notes": "Visibility & existence verified; educational alignment not yet code-audited"
+    }
+  ]
+}
