@@ -36,7 +36,9 @@ async function loadJson(path){
 
 let curriculum=[];
 let year='all';
-const explorationStorageKey = 'engineering-codex:official-entries-reviewed:v1';
+let activePlan='concentrated';
+const explorationKeys={concentrated:'engineering-codex:concentrated-5786-reviewed:v1',standard:'engineering-codex:official-entries-reviewed:v1'};
+let explorationStorageKey=explorationKeys.concentrated;
 let reviewedEntries = new Set();
 try {
   const saved = JSON.parse(window.localStorage.getItem(explorationStorageKey) || '[]');
@@ -52,6 +54,36 @@ function setProgress(trackId, fillId, done, total) {
   return Math.round(ratio * 100);
 }
 
+function renderAcademyYears() {
+  const grid=$('#academy-years');
+  if (!grid || !curriculum.length) return;
+  grid.replaceChildren();
+  for (let y=1; y<=4; y++) {
+    const items=curriculum.filter(e=>e.year===y);
+    const reviewed=items.filter(e=>reviewedEntries.has(e.curriculum_entry_id)).length;
+    const credits=items.reduce((s,e)=>s+(typeof e.credits==='number'?e.credits:0),0);
+    const card=el('button','academy-year'); card.type='button'; card.dataset.yearLink=String(y);
+    card.setAttribute('aria-label','Browse Year '+y+', '+reviewed+' of '+items.length+' entries reviewed');
+    card.append(el('strong','', 'Year '+y));
+    card.append(el('small','',activePlan==='concentrated'?((y<4?'A · B · Summer':'A · B')+' · '+credits+' credits'):'Published A/B entries'));
+    const track=el('span','academy-year-track'); track.setAttribute('aria-hidden','true');
+    const fill=el('span','academy-year-fill'); fill.style.width=(items.length?Math.round(reviewed/items.length*100):0)+'%';
+    track.append(fill); card.append(track);
+    card.append(el('span','academy-year-count',reviewed+'/'+items.length+' explored'));
+    grid.append(card);
+  }
+  const beyond=el('div','academy-year is-beyond');
+  beyond.append(el('strong','','Beyond')); beyond.append(el('small','','Professional'));
+  const bt=el('span','academy-year-track');bt.setAttribute('aria-hidden','true');beyond.append(bt);
+  beyond.append(el('span','academy-year-count','Future'));grid.append(beyond);
+}
+$('#academy-years').addEventListener('click',event=>{
+  const card=event.target.closest('[data-year-link]');
+  if(!card)return;
+  year=card.dataset.yearLink;
+  $('[data-year]').forEach(b=>b.classList.toggle('selected',b.dataset.year===year));
+  navigate('curriculum');renderCurriculum();
+});
 function updateExplorationProgress() {
   const ids = new Set(curriculum.map(entry => entry.curriculum_entry_id));
   const done = [...reviewedEntries].filter(id => ids.has(id)).length;
@@ -61,6 +93,7 @@ function updateExplorationProgress() {
   $('#explored-count').textContent = `${done} / ${total}`;
   $('#explored-percent').textContent = `${percent}%`;
   $('#curriculum-explored-count').textContent = `${done} / ${total} reviewed`;
+  renderAcademyYears();
 }
 function toggleReviewed(id) {
   if (reviewedEntries.has(id)) reviewedEntries.delete(id); else reviewedEntries.add(id);
@@ -76,7 +109,7 @@ function renderCurriculum(){
   updateExplorationProgress(); 
   if(!filtered.length){container.append(el('p','empty-state','No matching curriculum entries.'));return;}
   const grouped=new Map();
-  filtered.forEach(entry=>{const k=`Year ${entry.year} · Semester ${entry.semester}`;if(!grouped.has(k))grouped.set(k,[]);grouped.get(k).push(entry)});
+  filtered.forEach(entry=>{const term=entry.semester==='summer'?'Summer':('Semester '+entry.semester);const k='Year '+entry.year+' · '+term;if(!grouped.has(k))grouped.set(k,[]);grouped.get(k).push(entry)});
   for(const [key,entries] of grouped){
     const group=el('section','semester-group');
     group.append(el('h2','semester-heading',key));
@@ -88,7 +121,7 @@ function renderCurriculum(){
       top.append(el('span','course-domain',e.entry_type==='elective'?'Elective':e.entry_type==='preparatory'?'Preparatory':e.domain||'Course'));
       card.append(top);
       card.append(el('div','hebrew',e.title_he));
-      const meta=el('div','course-meta',e.course_code?`Course ${e.course_code} · Official schedule`:'Official schedule · Code not listed');
+      const metaParts=[];if(typeof e.credits==='number')metaParts.push(e.credits+' credits');else if(activePlan==='concentrated')metaParts.push('No separate credit value');if(e.course_code)metaParts.push('Course '+e.course_code);metaParts.push('Official schedule');const meta=el('div','course-meta',metaParts.join(' · '));
       card.append(meta);
       const reviewed = reviewedEntries.has(e.curriculum_entry_id);
       const mark = el('button', `review-toggle${reviewed ? ' is-reviewed' : ''}`, reviewed ? '✓ Reviewed' : 'Mark reviewed');
@@ -104,7 +137,19 @@ function renderCurriculum(){
 }
 $$('[data-year]').forEach(b=>b.addEventListener('click',()=>{year=b.dataset.year;$$('[data-year]').forEach(x=>x.classList.toggle('selected',x===b));renderCurriculum()}));
 $('#course-search').addEventListener('input',renderCurriculum);
-loadJson('./data/public/official_curriculum.json').then(d=>{curriculum=d.entries||[];$('#course-stat').textContent=`${curriculum.length} schedule entries`;renderCurriculum()}).catch(e=>{$('#curriculum-count').textContent=`Curriculum data unavailable: ${e.message}`});
+async function loadCurriculumPlan(plan) {
+  const filename=plan==='concentrated'?'./data/public/concentrated_curriculum_5786.json':'./data/public/official_curriculum.json';
+  const dataset=await loadJson(filename);
+  activePlan=plan;explorationStorageKey=explorationKeys[plan];
+  try {const saved=JSON.parse(window.localStorage.getItem(explorationStorageKey)||'[]');reviewedEntries=new Set(Array.isArray(saved)?saved.filter(id=>typeof id==='string'):[]);} catch {reviewedEntries=new Set();}
+  curriculum=dataset.entries||[];
+  $('[data-plan]').forEach(button=>{const active=button.dataset.plan===plan;button.classList.toggle('selected',active);button.setAttribute('aria-pressed',String(active));});
+  $('#plan-description').textContent=plan==='concentrated'?'תשפ״ו concentrated: 11 terms / 160 credits. The published Year 1 A includes preparatory courses, which may be taken before enrolment.':'Previously listed A/B plan. Official schedule is not proof of actual enrollment.';
+  const link=$('#curriculum-source-link');link.href=dataset.source_url;link.textContent=plan==='concentrated'?'Shenkar concentrated track PDF (תשפ״ו) ↗':'Shenkar official curriculum ↗';
+  $('#course-stat').textContent=curriculum.length+' schedule entries';renderCurriculum();
+}
+$('[data-plan]').forEach(button=>button.addEventListener('click',()=>loadCurriculumPlan(button.dataset.plan).catch(error=>{$('#curriculum-count').textContent='Curriculum data unavailable: '+error.message;})));
+loadCurriculumPlan('concentrated').catch(error=>{$('#curriculum-count').textContent='Curriculum data unavailable: '+error.message;});
 loadJson('./data/public/public_sources.json').then(d=>{
   const list=d.sources||[];$('#sources-count').textContent=`${list.length} public references in registry`;
   const grid=$('#source-grid');grid.replaceChildren();
