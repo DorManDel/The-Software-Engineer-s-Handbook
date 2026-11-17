@@ -6,6 +6,14 @@ root=Path(__file__).resolve().parents[1]
 load=lambda p:json.loads((root/p).read_text(encoding='utf-8'))
 curr=load('data/public/official_curriculum.json')
 assert curr['years']==4 and curr['credits_total']==160
+concentrated=load('data/public/concentrated_curriculum_5786.json')
+assert concentrated['years']==4 and concentrated['term_count']==11
+assert len(concentrated['terms'])==11 and len(concentrated['entries'])==56
+assert sum(t['credits'] for t in concentrated['terms'])==160
+assert sum(e['credits'] or 0 for e in concentrated['entries'])==160
+assert {(t['year'], t['semester']) for t in concentrated['terms']}==({(y,s) for y in range(1,4) for s in ('A','B','summer')}|{(4,'A'),(4,'B')})
+assert len({e['curriculum_entry_id'] for e in concentrated['entries']})==56
+assert all(e['student_status']=='unknown' for e in concentrated['entries'])
 rows=curr['entries']
 assert len(rows)==56
 assert len({x['curriculum_entry_id'] for x in rows})==len(rows)
