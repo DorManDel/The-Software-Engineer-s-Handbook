@@ -71,6 +71,18 @@
               <div class="art-light-trace"></div>
             </div>
           </div>
+
+          <section class="journey-progress glass reveal" aria-label="Curriculum exploration progress">
+            <div class="journey-progress-copy">
+              <div class="eyebrow"><span class="accent-dot"></span> THE LEARNING JOURNEY</div>
+              <h2>Every discovery <em>counts.</em></h2>
+              <p>Track the official curriculum entries you've explored. This is <strong>reading progress</strong>, not your personal degree completion.</p>
+              <div class="journey-progress-meta"><strong id="explored-count">0 / 56</strong><span>official entries reviewed</span><span class="journey-percentage" id="explored-percent">0%</span></div>
+              <div class="progress-track progress-track-large" id="explored-progress-track" role="progressbar" aria-label="Official curriculum entries reviewed" aria-valuenow="0" aria-valuemin="0" aria-valuemax="56"><span class="progress-fill" id="explored-progress-fill"></span></div>
+              <span class="progress-notice">Your actual study plan and completed courses are not mapped yet.</span>
+            </div>
+            <button type="button" class="journey-progress-action" data-goto="curriculum" aria-label="Browse the official course list and mark entries reviewed">Explore your map <span aria-hidden="true">↗</span></button>
+          </section>
           <div class="section-title"><div><span class="eyebrow">CHAPTER 01 / THE FOUNDATIONS</span><h2>A world of things to <em>discover.</em></h2></div><span class="muted small">DESIGNED TO LEARN BY DOING</span></div>
           <div class="feature-grid">
             <button type="button" class="feature-card glass reveal" data-goto="curriculum"><span class="card-icon">▦</span><span class="feature-title">Degree Explorer</span><span class="feature-desc">Official four-year curriculum, preserved with provenance and verified schedule rows.</span><span class="feature-bottom"><span id="course-stat">56 schedule entries</span><span>↗</span></span></button>
@@ -85,6 +97,10 @@
           <div class="eyebrow">DEGREE EXPLORER / OFFICIAL CURRICULUM</div>
           <h1 id="curriculum-title">The four-year <em>learning map.</em></h1>
           <p class="section-lead">Browse Shenkar's published Software Engineering schedule. Entries may repeat across semesters and do not assert personal completion.</p>
+          <div class="curriculum-progress-row">
+            <div><strong id="curriculum-explored-count">0 / 56 reviewed</strong><span>Tap “Mark reviewed” on any entry to update your exploration progress</span></div>
+            <div class="progress-track" id="curriculum-progress-track" role="progressbar" aria-label="Official curriculum entries reviewed" aria-valuenow="0" aria-valuemin="0" aria-valuemax="56"><span class="progress-fill" id="curriculum-progress-fill"></span></div>
+          </div>
           <div class="toolbar glass"><div class="year-filter" id="year-filter" role="group" aria-label="Academic year"><button class="filter-btn selected" data-year="all">All years</button><button class="filter-btn" data-year="1">Year 1</button><button class="filter-btn" data-year="2">Year 2</button><button class="filter-btn" data-year="3">Year 3</button><button class="filter-btn" data-year="4">Year 4</button></div><label class="search-field"><span aria-hidden="true">⌕</span><span class="sr-only">Search courses</span><input id="course-search" type="search" placeholder="Find a course…" /></label></div>
           <div id="curriculum-count" class="muted small result-count" aria-live="polite"></div>
           <div id="curriculum-list" class="curriculum-list"></div>
@@ -109,6 +125,8 @@
               <select id="challenge-select" aria-label="Choose terminal mission"></select>
               <h2 id="mission-heading">Linux: explore and organize</h2>
               <p id="mission-description" class="muted small"></p>
+              <div class="mission-progress-heading"><span>Mission progress</span><span id="mission-progress-percent">0%</span></div>
+              <div class="progress-track mission-progress-track" id="mission-progress-track" role="progressbar" aria-label="Completed steps in selected terminal mission" aria-valuenow="0" aria-valuemin="0" aria-valuemax="3"><span class="progress-fill" id="mission-progress-fill"></span></div>
               <div id="challenge-steps" class="challenge-steps" aria-live="polite"></div>
               <details class="hint"><summary>Need a hint?</summary><code id="mission-hint"></code></details>
               <div class="field-label">TRY A COMMAND</div>
