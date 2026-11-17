@@ -15,6 +15,7 @@ ALLOWLIST = (
     "src/app.mjs",
     "src/terminal-engine.mjs",
     "data/public/official_curriculum.json",
+    "data/public/concentrated_curriculum_5786.json",
     "data/public/public_sources.json",
 )
 
