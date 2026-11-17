@@ -34,7 +34,7 @@ test('honest animated progress: official exploration is separate from degree com
   assert.match(html, /id="explored-progress-track"[^>]*role="progressbar"/);
   assert.match(html, /id="curriculum-progress-track"[^>]*role="progressbar"/);
   assert.match(html, /id="mission-progress-track"[^>]*role="progressbar"/);
-  assert.match(html, /not your personal degree completion/);
+  assert.match(html, /not verified degree completion/);
   assert.match(app, /engineering-codex:official-entries-reviewed:v1/);
   assert.match(app, /reviewedEntries\.has\(e\.curriculum_entry_id\)/);
   assert.match(app, /setProgress\('#mission-progress-track'/);
