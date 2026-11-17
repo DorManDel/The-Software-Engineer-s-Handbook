@@ -310,7 +310,7 @@ body.motion-paused .academy-year-fill{transition:none}
 .private-degree-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .private-progress-label{display:inline-flex;align-items:center;justify-content:space-between;gap:18px;cursor:pointer;background:linear-gradient(110deg,rgba(192,231,252,.18),rgba(167,177,230,.13));border:1px solid rgba(199,232,250,.25);border-radius:999px;color:#e7f5ff;min-height:43px;padding:11px 15px;font-size:.79rem;font-weight:610}
 .private-progress-label:hover{background:rgba(176,221,248,.23)}
-.private-progress-label:focus-within{outline:2px solid #d1e8f8;outline-offset:3px}
+.private-progress-label:focus-within,.private-progress-label:has(+ #private-progress-input:focus-visible){outline:2px solid #d1e8f8;outline-offset:3px}
 #private-progress-input{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 #private-progress-input:focus-visible+.private-clear{outline:2px solid #d1e8f8}
 .private-clear{border:0;background:transparent;color:#a6c8dc;font-size:.79rem;min-height:40px;padding:9px 12px}
