@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#051226" />
+  <meta name="description" content="Engineering Codex Data & Algorithms Arsenal: experiment with quantization precision, reconstruction error and memory/network trade-offs." />
+  <title>Quantization Playground · Engineering Codex</title>
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="./lab.css" />
+  <script type="module" src="../../src/quantization-lab.mjs"></script>
+</head>
+<body class="arsenal-page">
+  <div class="ambient" aria-hidden="true"><div class="ambient-aurora aurora-a"></div><div class="ambient-aurora aurora-b"></div></div>
+  <a class="skip-link" href="#main">Skip to experiment</a>
+  <div class="app-shell">
+    <header class="arsenal-header glass">
+      <a class="arsenal-brand" href="../../#home" aria-label="Engineering Codex home"><span class="arsenal-logo">&lt;/&gt;</span><span>Engineering Codex<small>DATA & ALGORITHMS ARSENAL</small></span></a>
+      <nav aria-label="Lab navigation"><a href="../../#home">← Back to Codex</a><span>LAB 001 · FOUNDATIONS</span></nav>
+    </header>
+    <main id="main" class="arsenal-main">
+      <div class="eyebrow">ARSENAL / PRECISION & ENCODING / LAB 001</div>
+      <div class="arsenal-hero"><div><h1>Quantization,<br/><em>made tangible.</em></h1><p>More bits buy a better worst-case guarantee — not necessarily a smaller error for every particular value. Test it for yourself.</p></div><div class="hero-label glass"><span class="hero-label-orbit">◌</span><strong>Bits ≠ precision needs</strong><small>Understand the trade-off.</small></div></div>
+      <div class="arsenal-grid">
+        <section class="glass lab-panel" aria-labelledby="experiment-heading">
+          <div class="panel-heading"><div><span class="eyebrow">EXPERIMENT 01 / QUANTIZATION</span><h2 id="experiment-heading">Live signal playground</h2></div><span class="pill">LIVE MODEL</span></div>
+          <div class="field"><div class="field-top"><label for="position">Normalized position</label><output id="position-readout" for="position">0.44700</output></div><input class="glass-range" type="range" id="position" min="0" max="1" step="0.00001" value="0.447" /></div>
+          <div class="field"><div class="field-top"><label for="bits">Quantization precision</label><output id="bits-readout" for="bits">8 bits</output></div><div class="bit-preset-group" role="group" aria-label="Bit depth presets">
+            <button class="bit-preset active" data-bits="8" type="button" aria-pressed="true">8</button><button class="bit-preset" data-bits="12" type="button" aria-pressed="false">12</button><button class="bit-preset" data-bits="16" type="button" aria-pressed="false">16</button><button class="bit-preset" data-bits="17" type="button" aria-pressed="false">17</button><button class="bit-preset" data-bits="24" type="button" aria-pressed="false">24</button>
+          </div><input class="glass-range" type="range" id="bits" min="4" max="24" step="1" value="8" /></div>
+          <div class="field"><div class="field-top"><label for="width">Object width / reference axis</label><output id="width-readout" for="width">500 px</output></div><input class="glass-range" type="range" id="width" min="100" max="2000" step="25" value="500" /></div>
+          <div class="signal-view"><div class="signal-head"><span>ORIGINAL VS RECONSTRUCTED</span><span id="levels-readout">256 levels</span></div><svg id="quant-visual" viewBox="0 0 600 105" role="img" aria-label="Original and reconstructed normalized position on the same axis"><line x1="24" x2="576" y1="55" y2="55" stroke="#86acc2" stroke-width="2"/><circle cx="271" cy="55" r="9" fill="#eacd86"/></svg><div class="legend"><span><i class="legend-source"></i> Original</span><span><i class="legend-rebuilt"></i> Reconstructed</span></div></div>
+          <div class="metrics" aria-live="polite">
+            <div class="metric"><small>Encoded integer</small><strong id="q-value">114</strong><span id="q-binary">01110010</span></div>
+            <div class="metric"><small>Decoded value</small><strong id="decoded">0.447058824</strong><span>Normalized coordinate</span></div>
+            <div class="metric"><small>Actual position error</small><strong id="actual-px">0.029412 px</strong><span id="actual-norm">0.000058824 normalized</span></div>
+            <div class="metric"><small>Worst-case error</small><strong id="worst-px">0.980392 px</strong><span>Guaranteed upper bound</span></div>
+          </div>
+          <p class="lab-note"><strong>Why can 12 bits look worse than 8?</strong> The position may sit closer to an 8-bit grid point by coincidence. The worst-case bound still improves with each additional bit.</p>
+        </section>
+        <aside class="lab-sidebar">
+          <section class="glass lab-panel" aria-labelledby="bits-chart-title"><span class="eyebrow">COMPARE THE SAME VALUE</span><h2 id="bits-chart-title">Error by bit depth</h2><p>Solid bar: actual error. Outlined bar: maximum possible error for the chosen width. Each row has its own numeric labels; bars share a common scale.</p><div id="bit-comparison" class="bit-comparison" role="list"></div><p class="caption">Compare guarantees, not only a lucky example.</p></section>
+          <section class="glass lab-panel" aria-labelledby="decimal-title"><span class="eyebrow">DIFFERENT QUESTION / DECIMAL PRECISION</span><h2 id="decimal-title">Five decimal places</h2><p>If coordinates belong to a <code>0.00001</code> grid within [0,1], multiply by <code>100000</code> and store an integer. This needs <strong>17 bits</strong> to represent all 100,001 values exactly.</p><div class="decimal-readout"><span>Fixed-point integer</span><strong id="fixed-int">44700</strong><small id="fixed-value">0.44700 reconstructed</small></div><p class="caption">This preserves five-place decimal grid values exactly. Values with extra decimals are rounded first.</p></section>
+        </aside>
+      </div>
+      <section class="glass trade-panel" aria-labelledby="trade-title"><div class="panel-heading"><div><span class="eyebrow">EXPERIMENT 02 / TRADE-OFF ENGINE PREVIEW</span><h2 id="trade-title">Choose constraints, not favorites.</h2></div><span class="pill muted-pill">ESTIMATED · IDEAL PACKING</span></div><p>Suppose each entity has two normalized coordinates. Choose a tolerance and workload to find the minimum uniform quantization bit depth with a defensible worst-case bound.</p>
+        <div class="trade-grid">
+          <div class="field"><div class="field-top"><label for="entities">Entities</label><output id="entities-readout" for="entities">100</output></div><input class="glass-range" type="range" id="entities" min="1" max="5000" step="1" value="100"/></div>
+          <div class="field"><div class="field-top"><label for="tolerance">Max allowed pixel error</label><output id="tolerance-readout" for="tolerance">0.1 px</output></div><input class="glass-range" type="range" id="tolerance" min="-3" max="1" step="0.05" value="-1"/></div>
+          <div class="field"><div class="field-top"><label for="updates">Snapshots per second</label><output id="updates-readout" for="updates">20 / s</output></div><input class="glass-range" type="range" id="updates" min="1" max="120" step="1" value="20"/></div>
+        </div>
+        <div class="trade-results" aria-live="polite"><div><small>Minimum bits / coordinate</small><strong id="recommended-bits">12</strong></div><div><small>Float32 payload / snapshot</small><strong id="float-bytes">800 B</strong></div><div><small>Bit-packed payload / snapshot</small><strong id="packed-bytes">300 B</strong></div><div><small>Ideal payload reduction</small><strong id="savings">62.5%</strong></div></div>
+        <div class="trade-ratio"><div id="trade-fill"></div></div>
+        <p id="trade-explanation" class="trade-explanation"></p>
+        <p class="lab-note"><strong>Model limits:</strong> assumes all positions are bounded to [0,1], fixed width, uniform quantization, tight bit packing and raw full snapshots. It excludes object metadata, headers, keys, framing, alignment, indexing, CPU/GPU conversion, delta compression and packet loss. It is <em>not</em> an actual runtime or multiplayer bandwidth benchmark.</p>
+      </section>
+      <section class="next-labs" aria-labelledby="next-labs-title"><div class="eyebrow">THE JOURNEY AHEAD</div><h2 id="next-labs-title">What comes after precision?</h2><div class="next-grid"><article class="glass mini-card"><span>002 / MEMORY LAYOUT</span><h3>AoS vs SoA</h3><p>Walk through memory access and cache behavior.</p></article><article class="glass mini-card"><span>003 / SPATIAL INDEXING</span><h3>Uniform Grid vs Quadtree</h3><p>Which neighbor search fits which world?</p></article><article class="glass mini-card"><span>004 / COMPRESSION</span><h3>Delta · RLE · Dictionary</h3><p>Compare lossless encodings on real datasets.</p></article><article class="glass mini-card"><span>005 / DISTRIBUTION</span><h3>Snapshots vs Events</h3><p>Trade bandwidth, latency, consistency and complexity.</p></article></div></section>
+      <footer class="arsenal-footer">ENGINEERING CODEX · MODEL THE COST, THEN MEASURE REAL SYSTEMS. <a href="../../#home">Back to the handbook ↗</a></footer>
+    </main>
+  </div>
+</body>
+</html>
