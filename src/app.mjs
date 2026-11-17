@@ -36,11 +36,44 @@ async function loadJson(path){
 
 let curriculum=[];
 let year='all';
+const explorationStorageKey = 'engineering-codex:official-entries-reviewed:v1';
+let reviewedEntries = new Set();
+try {
+  const saved = JSON.parse(window.localStorage.getItem(explorationStorageKey) || '[]');
+  if (Array.isArray(saved)) reviewedEntries = new Set(saved.filter(id => typeof id === 'string'));
+} catch { /* private browsing or malformed storage: use in-memory state */ }
+
+function setProgress(trackId, fillId, done, total) {
+  const track = $(trackId);
+  const ratio = total ? Math.min(1, Math.max(0, done / total)) : 0;
+  track.setAttribute('aria-valuenow', String(done));
+  track.setAttribute('aria-valuemax', String(total));
+  $(fillId).style.width = `${(ratio * 100).toFixed(2)}%`;
+  return Math.round(ratio * 100);
+}
+
+function updateExplorationProgress() {
+  const ids = new Set(curriculum.map(entry => entry.curriculum_entry_id));
+  const done = [...reviewedEntries].filter(id => ids.has(id)).length;
+  const total = curriculum.length;
+  const percent = setProgress('#explored-progress-track', '#explored-progress-fill', done, total);
+  setProgress('#curriculum-progress-track', '#curriculum-progress-fill', done, total);
+  $('#explored-count').textContent = `${done} / ${total}`;
+  $('#explored-percent').textContent = `${percent}%`;
+  $('#curriculum-explored-count').textContent = `${done} / ${total} reviewed`;
+}
+function toggleReviewed(id) {
+  if (reviewedEntries.has(id)) reviewedEntries.delete(id); else reviewedEntries.add(id);
+  try { window.localStorage.setItem(explorationStorageKey, JSON.stringify([...reviewedEntries])); } catch { /* still works in session */ }
+  renderCurriculum();
+}
+
 function renderCurriculum(){
   const input=$('#course-search').value.trim().toLowerCase();
   const filtered=curriculum.filter(c=>(year==='all'||String(c.year)===year) && (!input||[c.title_he,c.title_en_translation,c.domain,c.course_code].join(' ').toLowerCase().includes(input)));
   const container=$('#curriculum-list');container.replaceChildren();
-  $('#curriculum-count').textContent=`${filtered.length} schedule entries shown · ${curriculum.length} total`; 
+  $('#curriculum-count').textContent=`${filtered.length} schedule entries shown · ${curriculum.length} total`;
+  updateExplorationProgress(); 
   if(!filtered.length){container.append(el('p','empty-state','No matching curriculum entries.'));return;}
   const grouped=new Map();
   filtered.forEach(entry=>{const k=`Year ${entry.year} · Semester ${entry.semester}`;if(!grouped.has(k))grouped.set(k,[]);grouped.get(k).push(entry)});
@@ -56,7 +89,15 @@ function renderCurriculum(){
       card.append(top);
       card.append(el('div','hebrew',e.title_he));
       const meta=el('div','course-meta',e.course_code?`Course ${e.course_code} · Official schedule`:'Official schedule · Code not listed');
-      card.append(meta);list.append(card);
+      card.append(meta);
+      const reviewed = reviewedEntries.has(e.curriculum_entry_id);
+      const mark = el('button', `review-toggle${reviewed ? ' is-reviewed' : ''}`, reviewed ? '✓ Reviewed' : 'Mark reviewed');
+      mark.type = 'button';
+      mark.setAttribute('aria-pressed', String(reviewed));
+      mark.setAttribute('aria-label', `${reviewed ? 'Mark as not reviewed' : 'Mark as reviewed'}: ${e.title_en_translation || e.title_he}`);
+      mark.addEventListener('click', () => toggleReviewed(e.curriculum_entry_id));
+      card.append(mark);
+      list.append(card);
     }
     group.append(list);container.append(group);
   }
@@ -93,7 +134,10 @@ function renderMission(){
   $('#mission-description').textContent=challenge.brief;
   $('#mission-hint').textContent=challenge.hint;
   const progress=challengeProgress(term,selectedChallenge);
-  $('#mission-counter').textContent=`${progress.filter(x=>x.done).length} / ${progress.length}`;
+  const completed = progress.filter(x => x.done).length;
+  $('#mission-counter').textContent = `${completed} / ${progress.length}`;
+  const percent = setProgress('#mission-progress-track', '#mission-progress-fill', completed, progress.length);
+  $('#mission-progress-percent').textContent = `${percent}%`;
   const steps=$('#challenge-steps');steps.replaceChildren();
   progress.forEach(p=>{const row=el('div',`challenge-step${p.done?' complete':''}`);row.append(el('span','step-icon',p.done?'✓':'○'));row.append(el('span','',p.label));steps.append(row)});
   const examples=$('#terminal-examples');examples.replaceChildren();
