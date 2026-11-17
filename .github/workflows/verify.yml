@@ -16,6 +16,8 @@ jobs:
         run: python3 scripts/validate.py
       - name: Test simulated terminal engine
         run: node --test tests/*.test.mjs
+      - name: Package safe public site, including the Arsenal lab
+        run: python3 scripts/build_pages.py
       - name: Compile and execute C17 pointer sample
         run: |
           cc -std=c17 -Wall -Wextra -Wpedantic -Werror pilot/labs/pointer_demo.c -o /tmp/pointer_demo
@@ -24,3 +26,5 @@ jobs:
         run: |
           node --check src/terminal-engine.mjs
           node --check src/app.mjs
+          node --check src/quantization-engine.mjs
+          node --check src/quantization-lab.mjs
