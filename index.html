@@ -78,6 +78,23 @@
             <div class="eyebrow">YOUR LEARNING JOURNEY</div>
             <div class="academy-years" id="academy-years" aria-label="Explore academic years"></div>
             <p class="academy-disclaimer">Illustrative curriculum exploration — <strong>not verified degree completion</strong>. Based on the 11-term concentrated study plan (תשפ״ו).</p>
+            <section class="private-degree-panel" aria-label="Private earned-credit progress">
+              <div class="private-degree-header"><div><span class="eyebrow">PERSONAL ACADEMIC JOURNEY</span><h3>Your degree, your pace.</h3></div><span class="private-degree-tag">LOCAL FILE ONLY</span></div>
+              <p>Load your redacted progress file to display earned credits. The official curriculum and your private record stay separate.</p>
+              <div class="private-degree-controls">
+                <label for="private-progress-input" class="private-progress-label">Choose private progress JSON <span aria-hidden="true">↗</span></label>
+                <input type="file" id="private-progress-input" accept=".json,application/json" aria-label="Load private progress JSON"/>
+                <button type="button" id="private-progress-clear" class="private-clear" hidden>Clear</button>
+              </div>
+              <div class="private-degree-results" id="private-progress-results" hidden>
+                <div class="private-credit-row"><strong id="private-credit-count">— / 160</strong><span id="private-credit-percent">—</span></div>
+                <div class="progress-track progress-track-large" id="private-progress-track" role="progressbar" aria-label="Credits earned against degree plan" aria-valuenow="0" aria-valuemin="0" aria-valuemax="160"><span class="progress-fill" id="private-progress-fill"></span></div>
+                <p id="private-progress-remainder" class="private-progress-remainder"></p>
+                <div id="private-progress-years" class="private-year-summaries"></div>
+              </div>
+              <p id="private-progress-message" role="status" class="private-progress-message">Nothing loaded. No personal grades or records are in this public website.</p>
+              <small class="private-progress-privacy">File processing happens in this browser session; this app does not upload or save the imported academic file.</small>
+            </section>
             <div class="academy-meter"><strong id="explored-count">0 / 56</strong><span>official entries reviewed</span><span id="explored-percent">0%</span></div>
             <div class="progress-track progress-track-large" id="explored-progress-track" role="progressbar" aria-label="Official curriculum entries reviewed" aria-valuenow="0" aria-valuemin="0" aria-valuemax="56"><span class="progress-fill" id="explored-progress-fill"></span></div>
             <div class="academy-continue">
