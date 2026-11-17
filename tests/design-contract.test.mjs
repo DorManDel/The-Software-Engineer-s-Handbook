@@ -29,3 +29,15 @@ test('learning UI IDs survive the visual redesign', () => {
     assert.match(html, new RegExp(`id="${id}"`));
   }
 });
+
+test('honest animated progress: official exploration is separate from degree completion', () => {
+  assert.match(html, /id="explored-progress-track"[^>]*role="progressbar"/);
+  assert.match(html, /id="curriculum-progress-track"[^>]*role="progressbar"/);
+  assert.match(html, /id="mission-progress-track"[^>]*role="progressbar"/);
+  assert.match(html, /not your personal degree completion/);
+  assert.match(app, /engineering-codex:official-entries-reviewed:v1/);
+  assert.match(app, /reviewedEntries\.has\(e\.curriculum_entry_id\)/);
+  assert.match(app, /setProgress\('#mission-progress-track'/);
+  assert.match(css, /@keyframes progress-shine/);
+  assert.match(css, /prefers-reduced-motion:reduce/);
+});
