@@ -165,6 +165,84 @@ loadJson('./data/public/public_sources.json').then(d=>{
   });
 }).catch(e=>{$('#sources-count').textContent=`Public sources unavailable: ${e.message}`});
 
+
+// Private academic progress is never fetched, stored, uploaded or bundled with this public app.
+// A user must explicitly choose a redacted local JSON file during this browser session.
+(function setupPrivateCreditImport() {
+  const input=$('#private-progress-input');
+  const results=$('#private-progress-results');
+  const clear=$('#private-progress-clear');
+  const message=$('#private-progress-message');
+
+  const showMessage=(text,error=false)=>{
+    message.textContent=text;
+    message.classList.toggle('private-progress-error',error);
+  };
+  const reset=()=>{
+    input.value='';
+    results.hidden=true;
+    clear.hidden=true;
+    $('#private-progress-fill').style.width='0%';
+    $('#private-progress-years').replaceChildren();
+    showMessage('Nothing loaded. No personal grades or records are in this public website.');
+  };
+
+  input.addEventListener('change', async()=>{
+    const file=input.files?.[0];
+    if(!file)return;
+    try {
+      if(file.size>1024*1024)throw new Error('The selected JSON is larger than the 1 MB import limit.');
+      const data=JSON.parse(await file.text());
+      if(data.schema_version!==1 || data.kind!=='engineering-codex-private-progress' || !Array.isArray(data.records)) {
+        throw new Error('Unsupported progress file. Choose an Engineering Codex private progress JSON.');
+      }
+      const summary=data.summary||{};
+      const required=summary.degree_required_credits;
+      const earned=summary.earned_credits;
+      if(!Number.isInteger(required) || required<=0 || required>1000 || !Number.isInteger(earned) || earned<0 || earned>required) {
+        throw new Error('Invalid degree credit totals in imported file.');
+      }
+      if(data.records.length>500)throw new Error('Too many course entries.');
+      const validStates=new Set(['completed','completed_preparatory','not_earned','in_progress_registered','future_registered_ungraded']);
+      const allValid=data.records.every(x=>Number.isInteger(x.year) && x.year>=0 && x.year<=10 &&
+        Number.isFinite(x.credits) && x.credits>=0 && x.credits<=100 && validStates.has(x.status));
+      if(!allValid)throw new Error('Invalid course records in imported file.');
+      const calculatedEarned=data.records.filter(x=>x.status==='completed').reduce((sum,x)=>sum+x.credits,0);
+      if(Math.abs(calculatedEarned-earned)>0.001)throw new Error('Course credit totals do not match the statement.');
+      const percent=earned/required*100;
+      $('#private-credit-count').textContent=earned+' / '+required+' credits';
+      $('#private-credit-percent').textContent=percent.toFixed(2)+'% earned';
+      const track=$('#private-progress-track');
+      track.setAttribute('aria-valuenow',String(earned));
+      track.setAttribute('aria-valuemax',String(required));
+      $('#private-progress-fill').style.width=percent.toFixed(3)+'%';
+      $('#private-progress-remainder').textContent=(required-earned)+' credits remain against the reference plan; graduation requirements still need an official audit.';
+      const years=$('#private-progress-years');
+      years.replaceChildren();
+      for(let y=1;y<=4;y++){
+        const rs=data.records.filter(x=>x.year===y);
+        const credits=rs.filter(x=>x.status==='completed').reduce((sum,x)=>sum+x.credits,0);
+        const inProgress=rs.filter(x=>x.status==='in_progress_registered').length;
+        const upcoming=rs.filter(x=>x.status==='future_registered_ungraded').length;
+        const tile=el('div','private-year');
+        tile.append(el('strong','','Year '+y));
+        tile.append(el('span','',credits+' credits earned'));
+        const detail=[inProgress?inProgress+' currently enrolled':null,upcoming?upcoming+' future registrations':null].filter(Boolean).join(' · ');
+        if(detail)tile.append(el('small','',detail));
+        years.append(tile);
+      }
+      results.hidden=false;
+      clear.hidden=false;
+      showMessage('Private academic record loaded for this session only. No grades, identifying information or transcript data are transmitted by this app.');
+    } catch(error) {
+      results.hidden=true;
+      clear.hidden=true;
+      showMessage(error instanceof Error?error.message:'Unable to read the selected file.',true);
+    }
+  });
+  clear.addEventListener('click',reset);
+})();
+
 let term=initialTerminalState();
 let selectedChallenge='linux-files';
 const terminalLog=$('#terminal-output');
