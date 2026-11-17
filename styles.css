@@ -216,3 +216,39 @@ body.motion-paused .art-orbit,body.motion-paused .art-caption,body.motion-paused
 @supports not (backdrop-filter:blur(1px)){.glass{background:rgba(8,25,44,.93)}}
 
 @media print{.ambient,.masthead-actions,.art-studio,.art-orbit{display:none!important}.view:not(.active){display:none}.motion-enhanced .reveal{opacity:1!important;transform:none!important}body{background:#fff;color:#101b28}.feature-card,.glass{background:#fff;color:#101b28;border:1px solid #d2dce7;box-shadow:none}}
+
+
+/* Progress studio: an honest educational exploration metric; not academic degree completion. */
+.journey-progress{position:relative;display:flex;align-items:end;justify-content:space-between;gap:32px;isolation:isolate;overflow:hidden;border-radius:31px;padding:clamp(27px,4vw,50px);margin:0 0 55px;background:radial-gradient(ellipse at 87% 5%,rgba(157,149,238,.13),transparent 44%),linear-gradient(155deg,rgba(24,52,80,.68),rgba(8,24,44,.7))}
+.journey-progress::before{content:"";position:absolute;width:230px;height:230px;right:-80px;top:-130px;border-radius:50%;border:1px solid rgba(182,222,243,.14);pointer-events:none}
+.journey-progress-copy{flex:1;max-width:740px;min-width:0}
+.journey-progress h2{font-size:clamp(1.75rem,3vw,3.4rem);line-height:1.1;font-weight:470;letter-spacing:-.065em;margin:13px 0}
+.journey-progress h2 em{font-family:var(--serif);font-weight:400;color:#b7ddef}
+.journey-progress p{font-size:.9rem;color:#bbccdc;line-height:1.75;max-width:600px;margin:0 0 25px}
+.journey-progress p strong{color:#e2f1fb;font-weight:600}
+.journey-progress-meta{display:flex;align-items:baseline;gap:12px;color:#a7c0d5;margin:0 0 12px;font-size:.8rem}
+.journey-progress-meta strong{color:#ecf7ff;font-size:1.35rem;font-weight:550;letter-spacing:-.045em}
+.journey-percentage{margin-left:auto;color:#c6e3fa;font-weight:650;font-variant-numeric:tabular-nums}
+.progress-track{position:relative;overflow:hidden;height:8px;width:100%;border:1px solid rgba(193,226,245,.16);border-radius:999px;background:rgba(3,18,35,.55);box-shadow:inset 0 2px 5px rgba(0,0,0,.25)}
+.progress-track-large{height:11px}
+.progress-fill{position:relative;display:block;width:0%;height:100%;border-radius:inherit;background:linear-gradient(90deg,#88c6e9,#b7ddf2 49%,#b3a4ed 80%,#e4d6b7);box-shadow:0 0 20px rgba(154,205,248,.31);transition:width 950ms cubic-bezier(.16,1,.3,1)}
+.progress-fill::after{content:"";position:absolute;inset:0;width:43%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.42),transparent);transform:skewX(-22deg) translateX(-160%);animation:progress-shine 4.3s ease-in-out infinite}
+@keyframes progress-shine{0%,50%{transform:skewX(-22deg) translateX(-160%)}80%,100%{transform:skewX(-22deg) translateX(410%)}}
+.progress-notice{display:block;color:#8eaac0;font-size:.72rem;line-height:1.55;margin-top:13px}
+.journey-progress-action{border:1px solid rgba(209,231,244,.24);background:rgba(210,235,248,.08);color:#ecf7ff;border-radius:999px;padding:15px 20px;white-space:nowrap;font-size:.85rem;font-weight:620;display:flex;gap:23px;align-items:center;transition:background .25s,transform .25s var(--ease);min-height:48px}
+.journey-progress-action:hover{background:rgba(188,223,242,.19);transform:translateY(-2px)}
+.journey-progress-action span{font-size:1.1em;color:#a9d8f2}
+.curriculum-progress-row{display:flex;align-items:center;gap:25px;border-radius:19px;background:rgba(168,212,239,.05);padding:18px 22px;border:1px solid rgba(177,220,244,.09);margin:0 0 21px}
+.curriculum-progress-row>div:first-child{display:flex;flex-direction:column;min-width:240px;gap:4px}
+.curriculum-progress-row strong{color:#e4f2ff;font-size:.84rem;font-weight:610}
+.curriculum-progress-row span{color:#94b0c7;font-size:.74rem;line-height:1.45}
+.curriculum-progress-row .progress-track{flex:1;min-width:90px}
+.review-toggle{align-self:flex-start;border:1px solid rgba(165,214,241,.2);border-radius:999px;background:rgba(155,207,236,.055);color:#b6d9f1;padding:8px 14px;font-size:.75rem;font-weight:590;min-height:36px;margin-top:14px;transition:background .25s,transform .25s, border-color .25s}
+.review-toggle:hover{background:rgba(165,213,239,.14);transform:translateY(-1px)}
+.review-toggle.is-reviewed{color:#d8f5ee;background:rgba(91,183,154,.13);border-color:rgba(130,213,184,.28)}
+.mission-progress-heading{display:flex;align-items:center;justify-content:space-between;gap:14px;font-size:.73rem;color:#a6c6d8;font-weight:580}
+.mission-progress-track{height:9px;margin-top:-8px;margin-bottom:4px}
+body.motion-paused .progress-fill{transition:none}
+body.motion-paused .progress-fill::after{animation:none}
+@media(max-width:730px){.journey-progress{display:block;margin-bottom:36px;padding:25px}.journey-progress-action{margin-top:22px;width:100%;justify-content:space-between}.curriculum-progress-row{flex-direction:column;align-items:stretch;gap:14px}.curriculum-progress-row>div:first-child{min-width:0}}
+@media(prefers-reduced-motion:reduce){.progress-fill{transition:none}.progress-fill::after{animation:none}.review-toggle,.journey-progress-action{transition:none}}
