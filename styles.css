@@ -299,3 +299,34 @@ body.motion-paused .academy-year-fill{transition:none}
 @media(max-width:950px){.academy-years{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:620px){.academy-overview{padding:16px}.academy-years{grid-template-columns:repeat(2,minmax(0,1fr))}.academy-year:last-child{grid-column:span 2}.academy-shortcuts{gap:8px}.academy-shortcut{min-height:137px;padding:15px}.academy-heading small{font-size:.67rem}}
 @media(prefers-reduced-motion:reduce){.academy-year-fill,.academy-year,.academy-shortcut{transition:none}}
+
+
+/* User-opted private academic import. No personal data is in the public build. */
+.private-degree-panel{padding:24px 25px;margin:24px 0 28px;border-radius:20px;background:linear-gradient(120deg,rgba(28,48,75,.65),rgba(7,21,42,.77));border:1px solid rgba(172,212,240,.17);box-shadow:inset 0 1px rgba(236,249,255,.075)}
+.private-degree-header{display:flex;align-items:start;justify-content:space-between;gap:16px}
+.private-degree-header h3{margin:9px 0 0;color:#e9f5ff;font-size:clamp(1.2rem,2.2vw,1.78rem);font-weight:520;letter-spacing:-.05em}
+.private-degree-tag{border-radius:999px;font-size:.57rem;letter-spacing:.075em;white-space:nowrap;background:rgba(161,213,238,.08);color:#bee4f7;padding:7px 10px;font-weight:700}
+.private-degree-panel>p{font-size:.78rem;line-height:1.7;color:#a9c0d3;max-width:670px;margin:16px 0}
+.private-degree-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.private-progress-label{display:inline-flex;align-items:center;justify-content:space-between;gap:18px;cursor:pointer;background:linear-gradient(110deg,rgba(192,231,252,.18),rgba(167,177,230,.13));border:1px solid rgba(199,232,250,.25);border-radius:999px;color:#e7f5ff;min-height:43px;padding:11px 15px;font-size:.79rem;font-weight:610}
+.private-progress-label:hover{background:rgba(176,221,248,.23)}
+.private-progress-label:focus-within{outline:2px solid #d1e8f8;outline-offset:3px}
+#private-progress-input{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#private-progress-input:focus-visible+.private-clear{outline:2px solid #d1e8f8}
+.private-clear{border:0;background:transparent;color:#a6c8dc;font-size:.79rem;min-height:40px;padding:9px 12px}
+.private-degree-results[hidden],.private-clear[hidden]{display:none!important}
+.private-credit-row{display:flex;justify-content:space-between;align-items:baseline;gap:15px;margin:22px 0 11px}
+.private-credit-row strong{font-size:clamp(1.6rem,3vw,2.25rem);font-weight:530;letter-spacing:-.06em;color:#e8f6ff;font-variant-numeric:tabular-nums}
+.private-credit-row span{font-size:1.04rem;color:#f1d5a1;font-weight:660;white-space:nowrap}
+.private-degree-results .progress-track{height:13px}
+.private-progress-remainder{color:#9ebbcf;font-size:.76rem;line-height:1.65}
+.private-year-summaries{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:18px}
+.private-year{display:flex;flex-direction:column;gap:7px;border-radius:13px;border:1px solid rgba(186,216,242,.1);background:rgba(174,206,239,.06);padding:14px;min-width:0}
+.private-year strong{font-size:.77rem;color:#dbeeff}
+.private-year span{font-size:.78rem;color:#b9d7e8}
+.private-year small{font-size:.64rem;color:#8cacbf;line-height:1.45}
+.private-progress-message{color:#a7c7d9;font-size:.73rem}
+.private-progress-message.private-progress-error{color:#f6b7b7}
+.private-progress-privacy{display:block;margin-top:8px;color:#769bb2;font-size:.65rem;line-height:1.5}
+@media(max-width:650px){.private-degree-panel{padding:17px}.private-year-summaries{grid-template-columns:repeat(2,minmax(0,1fr))}.private-degree-tag{font-size:.49rem}.private-credit-row strong{font-size:1.5rem}}
+@media(prefers-reduced-motion:reduce){.private-progress-label{transition:none}}
