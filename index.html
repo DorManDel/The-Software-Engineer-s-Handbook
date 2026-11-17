@@ -72,16 +72,25 @@
             </div>
           </div>
 
-          <section class="journey-progress glass reveal" aria-label="Curriculum exploration progress">
-            <div class="journey-progress-copy">
-              <div class="eyebrow"><span class="accent-dot"></span> THE LEARNING JOURNEY</div>
-              <h2>Every discovery <em>counts.</em></h2>
-              <p>Track the official curriculum entries you've explored. This is <strong>reading progress</strong>, not your personal degree completion.</p>
-              <div class="journey-progress-meta"><strong id="explored-count">0 / 56</strong><span>official entries reviewed</span><span class="journey-percentage" id="explored-percent">0%</span></div>
-              <div class="progress-track progress-track-large" id="explored-progress-track" role="progressbar" aria-label="Official curriculum entries reviewed" aria-valuenow="0" aria-valuemin="0" aria-valuemax="56"><span class="progress-fill" id="explored-progress-fill"></span></div>
-              <span class="progress-notice">Your actual study plan and completed courses are not mapped yet.</span>
+
+          <section class="academy-overview glass reveal" aria-label="Engineering Codex academy overview">
+            <div class="academy-heading"><div><strong>The Engineering Codex</strong><small>Your personal software engineering academy</small></div><span class="academy-pill">CONCEPT PREVIEW</span></div>
+            <div class="eyebrow">YOUR LEARNING JOURNEY</div>
+            <div class="academy-years" id="academy-years" aria-label="Explore academic years"></div>
+            <p class="academy-disclaimer">Illustrative curriculum exploration — <strong>not verified degree completion</strong>. Based on the 11-term concentrated study plan (תשפ״ו).</p>
+            <div class="academy-meter"><strong id="explored-count">0 / 56</strong><span>official entries reviewed</span><span id="explored-percent">0%</span></div>
+            <div class="progress-track progress-track-large" id="explored-progress-track" role="progressbar" aria-label="Official curriculum entries reviewed" aria-valuenow="0" aria-valuemin="0" aria-valuemax="56"><span class="progress-fill" id="explored-progress-fill"></span></div>
+            <div class="academy-continue">
+              <strong>Continue learning</strong>
+              <button type="button" data-goto="terminal" class="academy-learning-row"><span aria-hidden="true">⌘</span><span><strong>Terminal Academy</strong><small>Systems Programming · Interactive Lab</small></span><span>Lab ↗</span></button>
+              <button type="button" data-goto="pointers" class="academy-learning-row"><span aria-hidden="true">{ }</span><span><strong>Pointers &amp; Memory</strong><small>Interactive C memory lab</small></span><span>Lab ↗</span></button>
             </div>
-            <button type="button" class="journey-progress-action" data-goto="curriculum" aria-label="Browse the official course list and mark entries reviewed">Explore your map <span aria-hidden="true">↗</span></button>
+            <div class="academy-shortcuts">
+              <button type="button" data-goto="curriculum" class="academy-shortcut"><span aria-hidden="true">▦</span><strong>Degree Explorer</strong><small>Browse by year, semester and course</small></button>
+              <article class="academy-shortcut is-planned"><span aria-hidden="true">⌁</span><strong>Knowledge Graph</strong><small>Prerequisites and connections · Planned</small></article>
+              <button type="button" data-goto="terminal" class="academy-shortcut"><span aria-hidden="true">⚗</span><strong>Interactive Labs</strong><small>Experiment with real concepts</small></button>
+              <article class="academy-shortcut is-planned"><span aria-hidden="true">⌘</span><strong>Assignment Studio</strong><small>Learn, test and review · Planned</small></article>
+            </div>
           </section>
           <div class="section-title"><div><span class="eyebrow">CHAPTER 01 / THE FOUNDATIONS</span><h2>A world of things to <em>discover.</em></h2></div><span class="muted small">DESIGNED TO LEARN BY DOING</span></div>
           <div class="feature-grid">
@@ -97,6 +106,8 @@
           <div class="eyebrow">DEGREE EXPLORER / OFFICIAL CURRICULUM</div>
           <h1 id="curriculum-title">The four-year <em>learning map.</em></h1>
           <p class="section-lead">Browse Shenkar's published Software Engineering schedule. Entries may repeat across semesters and do not assert personal completion.</p>
+          <div class="plan-switch" role="group" aria-label="Choose official study plan"><button class="plan-option selected" type="button" data-plan="concentrated" aria-pressed="true">Concentrated · A/B/Summer</button><button class="plan-option" type="button" data-plan="standard" aria-pressed="false">Other published A/B plan</button></div>
+          <p id="plan-description" class="plan-description">תשפ״ו concentrated track: 11 terms and 160 credits. Preparatory courses may be taken before the first semester.</p>
           <div class="curriculum-progress-row">
             <div><strong id="curriculum-explored-count">0 / 56 reviewed</strong><span>Tap “Mark reviewed” on any entry to update your exploration progress</span></div>
             <div class="progress-track" id="curriculum-progress-track" role="progressbar" aria-label="Official curriculum entries reviewed" aria-valuenow="0" aria-valuemin="0" aria-valuemax="56"><span class="progress-fill" id="curriculum-progress-fill"></span></div>
@@ -104,7 +115,7 @@
           <div class="toolbar glass"><div class="year-filter" id="year-filter" role="group" aria-label="Academic year"><button class="filter-btn selected" data-year="all">All years</button><button class="filter-btn" data-year="1">Year 1</button><button class="filter-btn" data-year="2">Year 2</button><button class="filter-btn" data-year="3">Year 3</button><button class="filter-btn" data-year="4">Year 4</button></div><label class="search-field"><span aria-hidden="true">⌕</span><span class="sr-only">Search courses</span><input id="course-search" type="search" placeholder="Find a course…" /></label></div>
           <div id="curriculum-count" class="muted small result-count" aria-live="polite"></div>
           <div id="curriculum-list" class="curriculum-list"></div>
-          <p class="footnote">Official curriculum source: <a href="https://www.shenkar.ac.il/engineering/bachelors/software_engineering/curriculum/" target="_blank" rel="noopener noreferrer">Shenkar Software Engineering B.Sc. ↗</a>. English titles are editorial translations.</p>
+          <p class="footnote">Official reference: <a id="curriculum-source-link" href="https://drive.google.com/file/d/173e0wkqMZiDlLUM-UGJfoFMyo_X_N7vT/view?usp=sharing" target="_blank" rel="noopener noreferrer">Concentrated track PDF (תשפ״ו) ↗</a>. English titles are editorial translations. This is not your personal transcript.</p>
         </section>
 
         <section class="view" id="view-terminal" aria-labelledby="terminal-title">
