@@ -56,3 +56,22 @@ test('concentrated track is 11 published terms and not a personal transcript', (
   assert.match(html, /Knowledge Graph/);
   assert.match(html, /Assignment Studio/);
 });
+
+
+test('private academic import remains opt-in, browser-only and absent from public curriculum', () => {
+  assert.match(html, /id="private-progress-input"[^>]*type="file"|type="file"[^>]*id="private-progress-input"/);
+  assert.match(html, /id="private-progress-track"[^>]*role="progressbar"/);
+  assert.match(html, /Nothing loaded\. No personal grades or records/);
+  assert.match(app, /engineering-codex-private-progress/);
+  assert.match(app, /await file\.text\(\)/);
+  const begin=app.indexOf('function setupPrivateCreditImport()');
+  const end=app.indexOf('let term=initialTerminalState()',begin);
+  assert.ok(begin>=0&&end>begin);
+  const onlyImporter=app.slice(begin,end);
+  assert.doesNotMatch(onlyImporter,/localStorage|sessionStorage|fetch\(|sendBeacon|XMLHttpRequest/);
+  assert.match(onlyImporter,/results\.hidden=true/);
+  assert.match(onlyImporter,/calculatedEarned/);
+  const plan=JSON.parse(readFileSync(new URL('../data/public/concentrated_curriculum_5786.json',import.meta.url),'utf8'));
+  assert.ok(plan.entries.every(row=>row.student_status==='unknown'));
+  assert.doesNotMatch(JSON.stringify(plan),/earned_credits|personal_progress|private-progress/);
+});
