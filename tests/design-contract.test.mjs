@@ -41,3 +41,18 @@ test('honest animated progress: official exploration is separate from degree com
   assert.match(css, /@keyframes progress-shine/);
   assert.match(css, /prefers-reduced-motion:reduce/);
 });
+
+test('concentrated track is 11 published terms and not a personal transcript', () => {
+  const plan=JSON.parse(readFileSync(new URL('../data/public/concentrated_curriculum_5786.json',import.meta.url),'utf8'));
+  assert.equal(plan.entries.length,56);
+  assert.equal(plan.terms.length,11);
+  assert.equal(plan.terms.reduce((a,b)=>a+b.credits,0),160);
+  assert.equal(plan.terms.filter(t=>t.semester==='summer').length,3);
+  assert.ok(!plan.terms.some(t=>t.year===4&&t.semester==='summer'));
+  assert.ok(plan.entries.every(e=>e.student_status==='unknown'));
+  assert.match(html, /id="academy-years"/);
+  assert.match(html, /data-plan="concentrated"/);
+  assert.match(app, /concentrated_curriculum_5786\.json/);
+  assert.match(html, /Knowledge Graph/);
+  assert.match(html, /Assignment Studio/);
+});
