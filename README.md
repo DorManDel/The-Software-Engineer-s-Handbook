@@ -73,3 +73,10 @@ The homepage also contains an **optional local-only academic credit meter**. To 
 For safety, **do not import a real transcript or private progress file into an untrusted third-party preview**. The public repository intentionally contains **no personal transcripts, grades, student IDs or earned-credit totals**. The progress JSON must stay private and outside the repository.
 
 The meter shows documented accumulated credits compared with a reference credit requirement. It is **not an official graduation eligibility check**. The old `Mark reviewed` tracker is retained as a separate learning/exploration metric.
+
+
+## Data & Algorithms Arsenal · Lab 001 (review branch)
+
+The first interactive educational module lives at `labs/quantization/index.html` and is linked from the homepage. It covers normalized coordinate quantization, actual vs worst-case error, five-place decimal fixed-point encoding, bit packing and a simple payload-only trade-off estimator. `src/quantization-engine.mjs` owns testable calculations; `src/quantization-lab.mjs` owns UI. All calculations are local in the browser. This is a teaching model, not a measured network or memory performance benchmark.
+
+**Publication guard:** the build script includes this lab only in an explicit static-site allowlist. This branch is based on the unmerged Atelier R1 design branch; do not publish from `main` without separate visual/CI/device review.
