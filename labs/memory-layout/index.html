@@ -55,6 +55,7 @@
 <div class="struct-code"><code>struct Fish {<br/>  float x;      // 4 bytes<br/>  uint8_t hp;   // 1 byte<br/>  /* padding */ // 3 bytes<br/>  float y;      // 4 bytes<br/>};</code></div>
 <div class="struct-bytes" id="struct-bytes" aria-label="Twelve bytes with exact offsets"></div>
 <div class="struct-readouts" id="struct-readouts"></div>
+<details class="struct-compiler-note"><summary>Compare with your native C compiler · sizeof / offsetof</summary><p>Native C records may have different padding, alignment and total size. Run the companion C17 experiment in WSL or your native compiler to inspect <code>sizeof</code>, <code>_Alignof</code> and <code>offsetof</code> on that platform.</p><code>cc -std=c17 pilot/labs/struct_layout_demo.c -o struct_layout_demo &amp;&amp; ./struct_layout_demo</code><p><a href="https://github.com/DorManDel/The-Software-Engineer-s-Handbook/blob/feat/data-algorithms-arsenal-lab-001/pilot/labs/struct_layout_demo.c" target="_blank" rel="noopener noreferrer">Open C17 companion source ↗</a></p></details>
 <p class="lab-note"><strong>Important:</strong> the pictured 12-byte layout is a deliberate DataView encoding, not a guaranteed C struct layout. Native alignment and padding vary by ABI, compiler and packing settings. JS object properties do not imply this memory layout either.</p>
 </section>
 <section class="glass lab-panel" aria-labelledby="trade-title">
