@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="theme-color" content="#051226"/>
+<meta name="description" content="Explore actual typed-array memory layouts: AoS, SoA, AoSoA, byte offsets, struct overlays, and honest on-device benchmarks."/>
+<title>Memory Layout Explorer · Engineering Codex</title>
+<link rel="stylesheet" href="../../styles.css"/>
+<link rel="stylesheet" href="../quantization/lab.css"/>
+<link rel="stylesheet" href="./lab.css"/>
+<script type="module" src="../../src/memory-layout-lab.mjs"></script>
+</head>
+<body class="arsenal-page">
+<div class="ambient" aria-hidden="true"><div class="ambient-aurora aurora-a"></div><div class="ambient-aurora aurora-b"></div></div>
+<a class="skip-link" href="#main">Skip to memory explorer</a>
+<div class="app-shell">
+<header class="arsenal-header glass">
+  <a class="arsenal-brand" href="../../#home" aria-label="Engineering Codex home"><span class="arsenal-logo">&lt;/&gt;</span><span>Engineering Codex<small>DATA & ALGORITHMS ARSENAL</small></span></a>
+  <nav aria-label="Lab navigation"><a href="../quantization/">← Lab 001</a><a href="../../#home">Codex</a><span>LAB 002 · MEMORY</span></nav>
+</header>
+<main id="main" class="arsenal-main">
+<div class="eyebrow">ARSENAL / DATA STRUCTURES / LAB 002</div>
+<div class="arsenal-hero"><div><h1>Memory,<br/><em>made visible.</em></h1><p>Same fish. Same three fields. Three different physical layouts. Follow each value down to its exact offset inside a real JavaScript ArrayBuffer.</p></div><div class="hero-label glass"><span class="hero-label-orbit">⌘</span><strong>Layout changes access.</strong><small>Assumptions change results.</small></div></div>
+<section class="glass lab-panel" aria-labelledby="map-title">
+<div class="panel-heading"><div><span class="eyebrow">EXPERIMENT 01 / DATA ARRANGEMENT</span><h2 id="map-title">Interactive memory map</h2></div><span class="pill">REAL TYPED BUFFERS</span></div>
+<div class="layout-choices" role="group" aria-label="Memory layout">
+<button type="button" data-layout="aos" class="layout-choice active" aria-pressed="true"><strong>AoS</strong><small>Array of Structures</small></button>
+<button type="button" data-layout="soa" class="layout-choice" aria-pressed="false"><strong>SoA</strong><small>Structure of Arrays</small></button>
+<button type="button" data-layout="aosoa" class="layout-choice" aria-pressed="false"><strong>AoSoA</strong><small>Array of Structures of Arrays</small></button>
+</div>
+<div class="map-controls">
+<div class="field"><div class="field-top"><label for="fish-count">Fish entities</label><output id="fish-count-out">6</output></div><input id="fish-count" class="glass-range" type="range" min="2" max="12" step="1" value="6"/></div>
+<div class="field"><div class="field-top"><label for="block-size">AoSoA block size</label><output id="block-size-out">4</output></div><input id="block-size" class="glass-range" type="range" min="2" max="8" step="1" value="4"/></div>
+<div class="field"><label for="access-pattern">What are we accessing?</label><select id="access-pattern"><option value="positions">Scan x and y for every fish</option><option value="entity">Read all properties of one fish</option><option value="health">Scan health for every fish</option></select></div>
+</div>
+<div class="map-overview">
+<div class="metric"><small>Logical data (3 × Float32)</small><strong id="logical-byte-count">72 B</strong><span>Count × 12 bytes</span></div>
+<div class="metric"><small>Allocated buffers</small><strong id="buffer-count">1</strong><span id="layout-explanation-short">One packed buffer</span></div>
+<div class="metric"><small>Allocated payload bytes</small><strong id="allocated-byte-count">72 B</strong><span>TypedArray.byteLength, actually allocated</span></div>
+<div class="metric"><small>Block padding</small><strong id="padding-byte-count">0 B</strong><span>Unused slots, not C ABI padding</span></div>
+</div>
+<div class="map-guide"><span class="tag-x">x / position</span><span class="tag-y">y / position</span><span class="tag-h">health</span><span class="tag-unused">unused slot</span><span class="tag-active">current access</span></div>
+<div id="memory-map" class="memory-map" aria-label="Memory buffers as ordered four-byte cells"></div>
+<div class="address-note" id="layout-explanation"></div>
+<div class="trace-bar"><div><span class="eyebrow">READ TRACE / BYTE OFFSETS</span><p id="trace-description">Click step to show the next field read.</p></div><div class="trace-actions"><button type="button" id="trace-reset" class="button ghost small">↺ Reset</button><button type="button" id="trace-step" class="button primary small">Step →</button></div></div>
+<div class="trace-status"><output id="trace-step-count">0 / 12 reads</output><output id="trace-current" aria-live="polite">Choose Step</output></div>
+<div class="trace-list" id="trace-list" aria-label="First twelve memory access offsets"></div>
+</section>
+<div class="arsenal-grid memory-second-row">
+<section class="glass lab-panel" aria-labelledby="overlay-title">
+<div class="eyebrow">EXPERIMENT 02 / STRUCT OVERLAY</div>
+<h2 id="overlay-title">One record. Twelve bytes.</h2>
+<p class="section-copy">A separate byte-level demo uses <code>DataView</code> to overlay different field types on the very same 12 bytes. Here we deliberately choose little-endian storage and explicit padding.</p>
+<div class="struct-code"><code>struct Fish {<br/>  float x;      // 4 bytes<br/>  uint8_t hp;   // 1 byte<br/>  /* padding */ // 3 bytes<br/>  float y;      // 4 bytes<br/>};</code></div>
+<div class="struct-bytes" id="struct-bytes" aria-label="Twelve bytes with exact offsets"></div>
+<div class="struct-readouts" id="struct-readouts"></div>
+<details class="struct-compiler-note"><summary>Compare with your native C compiler · sizeof / offsetof</summary><p>Native C records may have different padding, alignment and total size. Run the companion C17 experiment in WSL or your native compiler to inspect <code>sizeof</code>, <code>_Alignof</code> and <code>offsetof</code> on that platform.</p><code>cc -std=c17 pilot/labs/struct_layout_demo.c -o struct_layout_demo &amp;&amp; ./struct_layout_demo</code><p><a href="https://github.com/DorManDel/The-Software-Engineer-s-Handbook/blob/feat/data-algorithms-arsenal-lab-001/pilot/labs/struct_layout_demo.c" target="_blank" rel="noopener noreferrer">Open C17 companion source ↗</a></p></details>
+<p class="lab-note"><strong>Important:</strong> the pictured 12-byte layout is a deliberate DataView encoding, not a guaranteed C struct layout. Native alignment and padding vary by ABI, compiler and packing settings. JS object properties do not imply this memory layout either.</p>
+</section>
+<section class="glass lab-panel" aria-labelledby="trade-title">
+<div class="eyebrow">EXPERIMENT 03 / TRADE-OFF</div>
+<h2 id="trade-title">When does each layout help?</h2>
+<div id="layout-insights" class="layout-insights" aria-live="polite"></div>
+<p class="section-copy">All three models use <code>Float32Array</code> values. For SoA, each field uses a separate independently allocated buffer; for AoS and AoSoA, this example allocates a single buffer. Actual base addresses, cache lines and physical RAM placement cannot be inspected by standard browser JavaScript.</p>
+<div class="question-card"><strong>Trade-off challenge</strong><p>Does storing nearby fields together always make a loop faster? Run the benchmark below. Compare scenarios before concluding.</p></div>
+</section>
+</div>
+<section class="glass trade-panel benchmark-panel" aria-labelledby="benchmark-title">
+<div class="panel-heading"><div><div class="eyebrow">EXPERIMENT 04 / LOCAL MEASUREMENT</div><h2 id="benchmark-title">Browser Benchmark Studio</h2></div><span class="pill">MEASURED ON THIS DEVICE</span></div>
+<p>Compare identical numerical scans over typed buffers using the same dataset, entity order and fields. Timing uses <code>performance.now()</code> on your current browser. Preparation and allocation occur outside the timed scan.</p>
+<div class="benchmark-settings">
+<div class="field"><div class="field-top"><label for="bench-size">Benchmark entities</label><output for="bench-size" id="bench-size-out">50,000</output></div><input class="glass-range" id="bench-size" type="range" min="5000" max="100000" step="5000" value="50000"/></div>
+<div class="field"><label for="bench-pattern">Benchmark workload</label><select id="bench-pattern"><option value="positions">Read x + y</option><option value="entity">Read x + y + health</option><option value="health">Read health only</option></select></div>
+<div class="field"><label for="bench-block-size">AoSoA block size (only AoSoA)</label><select id="bench-block-size"><option value="2">2</option><option value="4" selected>4</option><option value="8">8</option><option value="16">16</option></select></div>
+<div class="field"><div class="field-top"><label for="bench-repeats">Scans per measurement</label><output id="bench-repeats-out" for="bench-repeats">40</output></div><input class="glass-range" id="bench-repeats" type="range" min="10" max="100" step="10" value="40"/></div>
+</div>
+<div class="benchmark-action-row"><button type="button" id="run-benchmark" class="button primary">Run measured comparison ↗</button><button type="button" id="export-benchmark" class="button ghost" disabled>Export results JSON ↓</button><span class="muted small" id="benchmark-status" role="status">No timings yet. Click Run.</span></div>
+<div class="benchmark-scroll"><table class="benchmark-table"><thead><tr><th>Layout</th><th>Median / scan</th><th>Range (5 samples)</th><th>Buffer bytes</th><th>Checksum</th></tr></thead><tbody id="benchmark-rows"><tr><td colspan="5" class="placeholder">Not measured</td></tr></tbody></table></div>
+<div id="benchmark-provenance" class="benchmark-provenance" aria-live="polite">No measurement session recorded.</div>
+<p class="lab-note"><strong>Evidence policy:</strong> this is a small local microbenchmark, not a published hardware result. Expect JIT compilation, timer precision, device load, GC, CPU caching, thermal state and browser version to affect timings. These results only compare the <em>tested read loops</em>; they do not measure insertion, update, rendering, native C/C++, GPU access or the complete ASCean application. Re-run and validate on actual target devices before changing architecture.</p>
+</section>
+<section class="next-labs" aria-label="Lab navigation"><div class="eyebrow">CONTINUE THE ARSENAL</div><div class="next-grid">
+<a class="glass mini-card" style="text-decoration:none" href="../quantization/"><span>001 / PRECISION</span><h3>Quantization</h3><p>Bits, normalized positions and worst-case error.</p></a>
+<article class="glass mini-card"><span>003 / PLANNED</span><h3>Spatial Grid</h3><p>Neighbor search, density and candidate counts.</p></article>
+<article class="glass mini-card"><span>004 / PLANNED</span><h3>Compression Lab</h3><p>Bit packing, delta, RLE and verified round trips.</p></article>
+</div></section>
+<footer class="arsenal-footer">ENGINEERING CODEX · DON'T INVENT THE NUMBERS. MEASURE THE SYSTEM. <a href="../../#home">Back to Codex ↗</a></footer>
+</main></div>
+</body></html>
