@@ -28,3 +28,5 @@ jobs:
           node --check src/app.mjs
           node --check src/quantization-engine.mjs
           node --check src/quantization-lab.mjs
+          node --check src/memory-layout-engine.mjs
+          node --check src/memory-layout-lab.mjs
