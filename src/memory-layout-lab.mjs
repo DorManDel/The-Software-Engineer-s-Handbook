@@ -126,6 +126,8 @@ for(const input of Object.values(benchInputs))input.addEventListener('input',()=
  Object.values(benchInputs).filter(x=>x.type==='range').forEach(rangeTrack);
  $('#bench-size-out').textContent=num(Number(benchInputs.size.value));
  $('#bench-repeats-out').textContent=benchInputs.repeats.value;
+ latestBenchmark=null;
+ $('#export-benchmark').disabled=true;
  $('#benchmark-status').textContent='Settings changed. Re-run to measure this workload.';
 });
 const nextFrame=()=>new Promise(resolve=>requestAnimationFrame(resolve));
@@ -169,7 +171,7 @@ async function runBenchmark() {
   for(const row of results) {
     const line=elt('tr');
     line.append(elt('td','',labels[row.layout]),elt('td',row.medianMsPerScan===best?'fastest':'',row.medianMsPerScan.toFixed(4)+' ms'),
-      elt('td','',row.samplesMsPerScan.length+' (median)'),elt('td','',num(row.allocatedBytes)+' B'),
+      elt('td','',Math.min(...row.samplesMsPerScan).toFixed(4)+'–'+Math.max(...row.samplesMsPerScan).toFixed(4)+' ms'),elt('td','',num(row.allocatedBytes)+' B'),
       elt('td','',row.checksum.toPrecision(11)));
     host.append(line);
   }
