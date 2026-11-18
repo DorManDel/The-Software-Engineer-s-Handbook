@@ -22,6 +22,10 @@ jobs:
         run: |
           cc -std=c17 -Wall -Wextra -Wpedantic -Werror pilot/labs/pointer_demo.c -o /tmp/pointer_demo
           test "$(/tmp/pointer_demo)" = "$(printf '42\n73')"
+      - name: Compile and inspect C17 struct layout (report only; ABI-dependent)
+        run: |
+          cc -std=c17 -Wall -Wextra -Wpedantic -Werror pilot/labs/struct_layout_demo.c -o /tmp/struct_layout_demo
+          /tmp/struct_layout_demo
       - name: Static syntax checks
         run: |
           node --check src/terminal-engine.mjs
