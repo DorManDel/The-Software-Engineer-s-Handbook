@@ -80,3 +80,10 @@ The meter shows documented accumulated credits compared with a reference credit 
 The first interactive educational module lives at `labs/quantization/index.html` and is linked from the homepage. It covers normalized coordinate quantization, actual vs worst-case error, five-place decimal fixed-point encoding, bit packing and a simple payload-only trade-off estimator. `src/quantization-engine.mjs` owns testable calculations; `src/quantization-lab.mjs` owns UI. All calculations are local in the browser. This is a teaching model, not a measured network or memory performance benchmark.
 
 **Publication guard:** the build script includes this lab only in an explicit static-site allowlist. This branch is based on the unmerged Atelier R1 design branch; do not publish from `main` without separate visual/CI/device review.
+
+
+## Data & Algorithms Arsenal · Lab 002 (review branch)
+
+`labs/memory-layout/index.html` is a separate, cross-linked Memory Layout Explorer. AoS, SoA and AoSoA are modeled using **real Float32Array buffers** with reproducible per-field byte offsets, padding for incomplete AoSoA blocks, a step-by-step access trace and a separate 12-byte explicit little-endian DataView struct overlay. The byte diagrams are exact for these defined buffers but do **not** reveal native process addresses, CPU cache lines or a portable C ABI layout.
+
+An opt-in local benchmark reads identical fields from all layouts using the same synthetic values. It runs five interleaved samples per candidate, reports the median time per full scan with a checksum and offers a downloadable JSON evidence record. Allocation, setup, real rendering and native C/C++ performance are out of scope. The results depend on this specific browser/device/workload; they are **not** performance guarantees. No benchmark data are uploaded or automatically saved.
