@@ -1,6 +1,6 @@
 # Data & Algorithms Arsenal — Roadmap & Experiment Contract
 
-Status: **Lab 001 implementation proposal, not published**. Target product: Engineering Codex (a discoverable learning track). The visualization/measurement core remains modular so ASCean, WebForge, MobiLab and future projects can reuse it. No direct coupling to ASCean's domain model or to private PCM data.
+Status: **Labs 001 and 002 implemented on a draft review branch, not published**. Target product: Engineering Codex (a discoverable learning track). The visualization/measurement core remains modular so ASCean, WebForge, MobiLab and future projects can reuse it. No direct coupling to ASCean's domain model or to private PCM data.
 
 ## Purpose
 
@@ -99,3 +99,16 @@ Payload-only estimator: `ceil(N * coordinatesPerItem * bits / 8)` bytes. A 12-bi
 - CI validates allowlist, module syntax and basic lab structure.
 - Manual QA: mobile Safari/Chrome + desktop, focus order, slider feel, overflow and responsive typography.
 - Do not merge or deploy Atelier R1 or this lab without explicit user review.
+
+
+## Implemented Lab 002 — Memory Layout Explorer
+
+- AoS: one contiguous Float32Array buffer, three consecutive float32 fields per fish.
+- SoA: three **separately allocated** Float32Array buffers, one per field. Offset zero restarts for each buffer; addresses are never inferred.
+- AoSoA: one contiguous buffer; groups of `B` fish, with `B` x, then `B` y, then `B` health values. The final block explicitly allocates unused slots. `B` is a teaching parameter, not an automatically optimized block size.
+- Interactive step-by-step physical offset trace for positions, all fields of one fish, and health scans.
+- A deliberately specified 12-byte little-endian DataView overlay with x:float32 (+0), hp:uint8 (+4), explicit pad (+5..7), y:float32 (+8); this is **not** a promise about the layout of a platform C struct.
+- Five-run local browser benchmark in which setup/allocations are excluded and checksums must agree. Timings are `performance.now()` measurements specific to one microbenchmark and device; export has schema, timestamp, data size, repeats, raw samples, median and checksum.
+- Follow-up: implement actual bit packing and a cross-language C17 struct-layout investigation using `sizeof`, `_Alignof`, and `offsetof` across compilers/targets when reproducible environments are available. Do not imply JS can inspect true virtual addresses or CPU cache misses directly.
+
+Acceptance gate before publication: GitHub CI, manual responsive and keyboard testing, reproducibility notes, and user-approved merge.
