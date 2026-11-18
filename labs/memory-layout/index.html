@@ -72,6 +72,7 @@
 <div class="benchmark-settings">
 <div class="field"><div class="field-top"><label for="bench-size">Benchmark entities</label><output for="bench-size" id="bench-size-out">50,000</output></div><input class="glass-range" id="bench-size" type="range" min="5000" max="100000" step="5000" value="50000"/></div>
 <div class="field"><label for="bench-pattern">Benchmark workload</label><select id="bench-pattern"><option value="positions">Read x + y</option><option value="entity">Read x + y + health</option><option value="health">Read health only</option></select></div>
+<div class="field"><label for="bench-block-size">AoSoA block size (only AoSoA)</label><select id="bench-block-size"><option value="2">2</option><option value="4" selected>4</option><option value="8">8</option><option value="16">16</option></select></div>
 <div class="field"><div class="field-top"><label for="bench-repeats">Scans per measurement</label><output id="bench-repeats-out" for="bench-repeats">40</output></div><input class="glass-range" id="bench-repeats" type="range" min="10" max="100" step="10" value="40"/></div>
 </div>
 <div class="benchmark-action-row"><button type="button" id="run-benchmark" class="button primary">Run measured comparison ↗</button><button type="button" id="export-benchmark" class="button ghost" disabled>Export results JSON ↓</button><span class="muted small" id="benchmark-status" role="status">No timings yet. Click Run.</span></div>
