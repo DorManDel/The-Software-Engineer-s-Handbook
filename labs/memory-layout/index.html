@@ -32,7 +32,7 @@
 <div class="map-controls">
 <div class="field"><div class="field-top"><label for="fish-count">Fish entities</label><output id="fish-count-out">6</output></div><input id="fish-count" class="glass-range" type="range" min="2" max="12" step="1" value="6"/></div>
 <div class="field"><div class="field-top"><label for="block-size">AoSoA block size</label><output id="block-size-out">4</output></div><input id="block-size" class="glass-range" type="range" min="2" max="8" step="1" value="4"/></div>
-<div class="field"><label for="access-pattern">What are we accessing?</label><select id="access-pattern"><option value="positions">Scan x and y for every fish</option><option value="entity">Read all properties of fish #2</option><option value="health">Scan health for every fish</option></select></div>
+<div class="field"><label for="access-pattern">What are we accessing?</label><select id="access-pattern"><option value="positions">Scan x and y for every fish</option><option value="entity">Read all properties of one fish</option><option value="health">Scan health for every fish</option></select></div>
 </div>
 <div class="map-overview">
 <div class="metric"><small>Logical data (3 × Float32)</small><strong id="logical-byte-count">72 B</strong><span>Count × 12 bytes</span></div>
@@ -76,7 +76,7 @@
 <div class="field"><div class="field-top"><label for="bench-repeats">Scans per measurement</label><output id="bench-repeats-out" for="bench-repeats">40</output></div><input class="glass-range" id="bench-repeats" type="range" min="10" max="100" step="10" value="40"/></div>
 </div>
 <div class="benchmark-action-row"><button type="button" id="run-benchmark" class="button primary">Run measured comparison ↗</button><button type="button" id="export-benchmark" class="button ghost" disabled>Export results JSON ↓</button><span class="muted small" id="benchmark-status" role="status">No timings yet. Click Run.</span></div>
-<div class="benchmark-scroll"><table class="benchmark-table"><thead><tr><th>Layout</th><th>Median / scan</th><th>Samples</th><th>Buffer bytes</th><th>Checksum</th></tr></thead><tbody id="benchmark-rows"><tr><td colspan="5" class="placeholder">Not measured</td></tr></tbody></table></div>
+<div class="benchmark-scroll"><table class="benchmark-table"><thead><tr><th>Layout</th><th>Median / scan</th><th>Range (5 samples)</th><th>Buffer bytes</th><th>Checksum</th></tr></thead><tbody id="benchmark-rows"><tr><td colspan="5" class="placeholder">Not measured</td></tr></tbody></table></div>
 <div id="benchmark-provenance" class="benchmark-provenance" aria-live="polite">No measurement session recorded.</div>
 <p class="lab-note"><strong>Evidence policy:</strong> this is a small local microbenchmark, not a published hardware result. Expect JIT compilation, timer precision, device load, GC, CPU caching, thermal state and browser version to affect timings. These results only compare the <em>tested read loops</em>; they do not measure insertion, update, rendering, native C/C++, GPU access or the complete ASCean application. Re-run and validate on actual target devices before changing architecture.</p>
 </section>
