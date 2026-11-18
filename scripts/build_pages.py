@@ -14,6 +14,7 @@ ALLOWLIST = (
     "styles.css",
     "src/app.mjs",
     "src/terminal-engine.mjs",
+    "unity-cookbook/index.html",
     "data/public/official_curriculum.json",
     "data/public/public_sources.json",
 )

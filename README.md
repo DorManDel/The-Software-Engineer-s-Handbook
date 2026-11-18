@@ -36,6 +36,7 @@ cc -std=c17 -Wall -Wextra -Wpedantic -Werror pilot/labs/pointer_demo.c -o /tmp/p
 - **Terminal Academy:** in-memory, allowlisted command simulator for Ubuntu/Linux and PowerShell, including modeled `wsl -l -v` and `wsl` transitions. Three guided missions use virtual filesystem-state checks rather than guessing based on typed text. No arbitrary code execution and no real WSL integration.
 - **C Memory Explorer:** interactive symbolic pointer/value lesson with code preview and quiz.
 - **Source Registry:** public sources with provenance; private Drive references stay out of the site.
+- **Unity Cookbook:** Hebrew-first Unity/C# how-to reference (34 starter topics, 54 copyable snippets) with quick lookup, inactive-object caveats, data structures, local review notes, screenshots, and JSON export/import. Accessible under `/unity-cookbook/`.
 
 ## Educational architecture
 
@@ -79,3 +80,15 @@ python3 scripts/build_pages.py
 cd _site
 python3 -m http.server 8000
 ```
+
+## Unity Cookbook: update workflow
+
+The Unity reference is a standalone, dependency-free educational module:
+
+- `unity-cookbook/index.html` — public GitHub Pages page. Core topic entries are embedded as seed JSON; future updates should be reviewed in source control.
+- `unity-cookbook/reference.md` — readable Markdown snapshot of the starter topics; it does **not** include user-specific notes or screenshots.
+- `scripts/build_pages.py` explicitly allowlists the public page for deployment.
+
+**Personal data boundary:** favorites, learning progress, private notes, imported topics and screenshots are stored in the current browser (localStorage/IndexedDB). They are not uploaded to GitHub automatically. Use **Export JSON** before changing browsers, devices, site origin or major versions and **Import JSON** to restore. Do not commit private JSON backups or copyrighted lecturer materials to this public repository.
+
+**Editorial workflow:** add a topic → include a short reason/use case, alternative implementations, Unity-version scope, inactive/Prefab caveats, a runnable C# example and a public API link → review before merge. Lecturer source documents may be referenced by private metadata when permission to publish the materials is not granted. Track decisions and private review notes through PCM, not by exposing them on GitHub Pages.
