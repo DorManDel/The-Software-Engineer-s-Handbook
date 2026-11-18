@@ -3,7 +3,7 @@ import {FIELDS,LAYOUTS,createDataset,locate,describeCells,accessTrace,structOver
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 const modelInputs = {count:$('#fish-count'),blockSize:$('#block-size'),pattern:$('#access-pattern')};
-const benchInputs = {size:$('#bench-size'),pattern:$('#bench-pattern'),repeats:$('#bench-repeats')};
+const benchInputs = {size:$('#bench-size'),pattern:$('#bench-pattern'),repeats:$('#bench-repeats'),blockSize:$('#bench-block-size')};
 const labels={aos:'AoS',soa:'SoA',aosoa:'AoSoA'};
 let layout='aos', model=null, steps=[], currentStep=-1;
 let latestBenchmark=null;
@@ -132,9 +132,9 @@ const nextFrame=()=>new Promise(resolve=>requestAnimationFrame(resolve));
 async function runBenchmark() {
  const button=$('#run-benchmark'),status=$('#benchmark-status');
  button.disabled=true;status.textContent='Preparing buffers and warming up…';
- const size=Number(benchInputs.size.value),pattern=benchInputs.pattern.value,repeats=Number(benchInputs.repeats.value);
+ const size=Number(benchInputs.size.value),pattern=benchInputs.pattern.value,repeats=Number(benchInputs.repeats.value),blockSize=Number(benchInputs.blockSize.value);
  try{
-  const datasets=LAYOUTS.map(kind=>createDataset(kind,size,4));
+  const datasets=LAYOUTS.map(kind=>createDataset(kind,size,blockSize));
   const reference=scanDataset(datasets[0],pattern,1);
   for(const ds of datasets){
     const check=scanDataset(ds,pattern,1);
@@ -175,9 +175,9 @@ async function runBenchmark() {
   }
   const timestamp=new Date().toISOString();
   const ratiostr=results.map(row=>labels[row.layout]+': '+row.medianMsPerScan.toFixed(4)+' ms/scan').join(' · ');
-  $('#benchmark-provenance').textContent='Local measurement · '+timestamp+'\n'+num(size)+' entities · '+repeats+' scans/sample · '+runs+' samples/layout · block size 4 · Float32Array only\n'+ratiostr+'\nAllocation and setup excluded · physical memory layout/cache hits not measured.';
+  $('#benchmark-provenance').textContent='Local measurement · '+timestamp+'\n'+num(size)+' entities · '+repeats+' scans/sample · '+runs+' samples/layout · AoSoA block size '+blockSize+' · Float32Array only\n'+ratiostr+'\nAllocation and setup excluded · physical memory layout/cache hits not measured.';
   latestBenchmark={schema:'engineering-codex-memory-benchmark-v1',timestamp,model:'Float32Array (not JS object AoS)',layoutVersion:'lab-002-v1',
-    entities:size,pattern,repeatsPerSample:repeats,samplesPerLayout:runs,blockSize:4,
+    entities:size,pattern,repeatsPerSample:repeats,samplesPerLayout:runs,blockSize,
     timer:'performance.now()',metric:'milliseconds per full scan',results,
     note:'Local microbenchmark only; no general hardware performance claim; GC/JIT/thermal effects possible'};
   $('#export-benchmark').disabled=false;
