@@ -20,6 +20,7 @@
         <a href="#curriculum" class="nav-link" data-nav="curriculum"><span>▦</span> Degree Explorer</a>
         <a href="#terminal" class="nav-link" data-nav="terminal"><span>⌘</span> Terminal Academy <span class="nav-new">LAB</span></a>
         <a href="#pointers" class="nav-link" data-nav="pointers"><span>{ }</span> C Memory Lab</a>
+        <a href="#arcade" class="nav-link" data-nav="arcade"><span>∑</span> Algorithm Arcade <span class="nav-new">NEW</span></a>
         <a href="#sources" class="nav-link" data-nav="sources"><span>↗</span> Source Registry</a>
       </nav>
       <div class="sidebar-bottom">
@@ -56,7 +57,7 @@
             <button type="button" class="feature-card glass" data-goto="curriculum"><span class="card-icon">▦</span><span class="feature-title">Degree Explorer</span><span class="feature-desc">Official four-year curriculum, preserved with provenance and verified schedule rows.</span><span class="feature-bottom"><span id="course-stat">56 schedule entries</span><span>↗</span></span></button>
             <button type="button" class="feature-card glass" data-goto="terminal"><span class="card-icon yellow">⌘</span><span class="feature-title">Terminal Academy</span><span class="feature-desc">Practice Linux, PowerShell and WSL concepts in a safe virtual workspace.</span><span class="feature-bottom"><span>3 interactive missions</span><span>↗</span></span></button>
             <button type="button" class="feature-card glass" data-goto="pointers"><span class="card-icon">{ }</span><span class="feature-title">C Memory Explorer</span><span class="feature-desc">Learn values, addresses and dereferencing with an explicitly symbolic memory model.</span><span class="feature-bottom"><span>First pilot chapter</span><span>↗</span></span></button>
-            <button type="button" class="feature-card glass" data-goto="sources"><span class="card-icon yellow">↗</span><span class="feature-title">Evidence & Sources</span><span class="feature-desc">Trace concepts to published curricula, reference documents and public repository metadata.</span><span class="feature-bottom"><span>Public sources only</span><span>↗</span></span></button>
+            <button type="button" class="feature-card glass" data-goto="arcade"><span class="card-icon yellow">∑</span><span class="feature-title">Algorithm Arcade</span><span class="feature-desc">Explore prime numbers, compare strategies and browse example solutions by language.</span><span class="feature-bottom"><span>Prime Detective · Lab 003</span><span>↗</span></span></button>
           </div>
           <div class="footnote">This is a prototype of the educational experience, not a full course import. Course completion and personal academic records are intentionally not shown.</div>
         </section>
@@ -108,6 +109,98 @@
           <div class="notice"><strong>SYMBOLIC MEMORY</strong><span>The illustrative address <code>0x1000</code> is not a true machine address; the model demonstrates pointer semantics.</span></div>
           <div class="pointer-layout"><div class="glass pointer-panel"><div class="field-label">MEMORY SNAPSHOT · STATIC TEACHING MODEL</div><div class="memory-cards"><div class="memory-cell"><span>OBJECT · x</span><strong id="pointer-value">42</strong><code>0x1000</code></div><div class="pointer-arrow" id="pointer-arrow">↔</div><div class="memory-cell accent-cell"><span>POINTER · ptr</span><strong id="pointer-address">0x1000</strong><code id="dereference-label">*ptr = 42</code></div></div><label class="field-label" for="value-slider">Change x: <output id="slider-value">42</output></label><input id="value-slider" type="range" min="0" max="100" value="42" /><label class="checkline"><input type="checkbox" id="pointer-connected" checked /> ptr points to x</label></div><div class="glass pointer-panel"><div class="field-label">LIVE-GENERATED C CODE</div><pre id="pointer-code" class="code-pane"></pre><div class="field-label">KNOWLEDGE CHECK</div><p class="small">When x changes, what does <code>*ptr</code> read, assuming ptr still points to x?</p><div class="quiz-row"><button class="quiz-button" data-answer="old">The old value</button><button class="quiz-button" data-answer="current">The current value</button></div><p id="quiz-feedback" class="muted small" role="status"></p></div></div>
           <p class="footnote">Chapter status: draft pilot. C17 sample code and a stronger chapter review are tracked in <code>pilot/</code>. Never dereference a null pointer.</p>
+        </section>
+
+
+        <section class="view" id="view-arcade" aria-labelledby="arcade-title">
+          <div class="eyebrow">INTERACTIVE LAB 003 / ALGORITHMS & DATA STRUCTURES</div>
+          <h1 id="arcade-title">Algorithm <em>Arcade.</em></h1>
+          <p class="section-lead">Think, solve, prove, optimize, then compare implementations. One concept at a time, with visible operation counts and an expanding language dictionary.</p>
+          <div class="notice"><strong>SAFE BROWSER LAB</strong><span>The prime experiment runs a reviewed JavaScript teaching engine. C and Python snippets are copyable examples, not executed in the browser. COBOL, Assembly and other languages are roadmap entries until their examples are reviewed.</span></div>
+          <div class="alg-layout">
+            <article class="alg-panel glass">
+              <span class="eyebrow">CHALLENGE 001 / NUMBER THEORY</span>
+              <h2>Prime Detective</h2>
+              <p class="muted small">A prime is an integer greater than 1 with exactly two positive divisors: 1 and itself. Find out how many remainder checks different methods need.</p>
+              <div class="alg-controls">
+                <label class="field-label" for="prime-number">INTEGER (0–100000)</label>
+                <input id="prime-number" type="number" value="97" min="0" max="100000" step="1" inputmode="numeric" />
+                <label class="field-label" for="prime-strategy">ALGORITHM</label>
+                <select id="prime-strategy">
+                  <option value="naive">Trial division: 2 to n−1 · O(n)</option>
+                  <option value="sqrt">Square-root bound · O(√n)</option>
+                  <option value="wheel" selected>6k ± 1 candidates · O(√n)</option>
+                </select>
+              </div>
+              <div class="alg-presets">
+                <button type="button" class="chip" data-prime-example="2">2 · prime</button>
+                <button type="button" class="chip" data-prime-example="25">25 · composite</button>
+                <button type="button" class="chip" data-prime-example="49">49 · composite</button>
+                <button type="button" class="chip" data-prime-example="97">97 · prime</button>
+              </div>
+              <p id="prime-feedback" class="alg-feedback" role="status" aria-live="polite"></p>
+              <div class="alg-stats">
+                <div><span>REMAINDER CHECKS</span><strong id="prime-operations">—</strong></div>
+                <div><span>TIME (WORST CASE)</span><strong id="prime-time">—</strong></div>
+                <div><span>DIVISOR FOUND</span><strong id="prime-divisor">—</strong></div>
+              </div>
+              <div class="field-label">DIVISORS TESTED · ORDER MATTERS</div>
+              <div class="alg-trace" id="prime-trace" aria-label="Remainder check trace"></div>
+              <p class="footnote">Counters measure actual modulo operations, not milliseconds. All methods use O(1) additional algorithmic space; the trace is diagnostic UI data.</p>
+            </article>
+            <aside class="alg-panel glass">
+              <span class="eyebrow">REASONING LADDER</span>
+              <h2>From brute force to 6k ± 1</h2>
+              <ol class="alg-reasoning">
+                <li><strong>Define the edge cases.</strong> 0 and 1 are not prime. 2 and 3 are prime.</li>
+                <li><strong>Stop on the first divisor.</strong> Once n % d equals zero, n is composite.</li>
+                <li><strong>Use the square-root bound.</strong> A composite n has at least one factor at most √n.</li>
+                <li><strong>Skip known multiples.</strong> Any prime greater than 3 must be 6k − 1 or 6k + 1.</li>
+                <li><strong>Keep checking.</strong> 25 and 49 also have those forms but are not prime.</li>
+              </ol>
+              <div class="alg-mini-note"><strong>Proof prompt</strong><p>Explain why two factors cannot both be larger than √n. Then explain why 6k ± 1 is necessary, but not sufficient.</p></div>
+            </aside>
+          </div>
+          <div class="section-title"><div><span class="eyebrow">POLYGLOT STUDY</span><h2>Language Explorer</h2></div><span class="muted small">Growing catalog · honest availability labels</span></div>
+          <p class="muted small">Filter the language catalog or show only languages that have a reviewed Prime Detective example. The same stable IDs can later filter every solved problem in the library.</p>
+          <div class="alg-toolbar glass">
+            <label for="language-filter" class="sr-only">Filter languages</label>
+            <select id="language-filter">
+              <option value="all">All languages</option>
+              <option value="available">Prime example available</option>
+              <option value="planned">Planned examples</option>
+              <option value="Systems">Systems</option>
+              <option value="Web">Web</option>
+              <option value="Scripting">Scripting</option>
+              <option value="Games">Games</option>
+              <option value="JVM">JVM</option>
+              <option value="Legacy">Legacy</option>
+              <option value="Markup">Markup & styles</option>
+            </select>
+            <label for="language-search" class="sr-only">Search languages</label>
+            <input id="language-search" type="search" placeholder="Find language or concept…" />
+          </div>
+          <div id="language-list" class="alg-language-grid" aria-live="polite"></div>
+          <div id="language-code-panel" class="alg-panel glass alg-code-panel">
+            <div class="alg-code-header">
+              <div><span class="eyebrow">ONE ALGORITHM · MULTIPLE LANGUAGES</span><h3>Prime Detective source</h3></div>
+              <label for="prime-code-language" class="sr-only">Choose source language</label>
+              <select id="prime-code-language">
+                <option value="c">C17</option>
+                <option value="python">Python 3</option>
+                <option value="javascript">JavaScript</option>
+              </select>
+            </div>
+            <pre class="code-pane alg-code"><code id="prime-code"></code></pre>
+            <p class="footnote">The selected source is a reference implementation. This website does not compile or run arbitrary C, Python, COBOL or Assembly code.</p>
+          </div>
+          <div class="section-title"><div><span class="eyebrow">CONCEPT DICTIONARY · SEED</span><h2>Words behind the code</h2></div></div>
+          <div class="alg-glossary">
+            <details class="glass"><summary>Prime number</summary><p>An integer greater than 1 whose positive divisors are exactly 1 and itself.</p></details>
+            <details class="glass"><summary>Modulo / remainder</summary><p>n % d returns the remainder after integer division. Zero means d divides n exactly.</p></details>
+            <details class="glass"><summary>Loop invariant</summary><p>A statement that remains true at the relevant point of each iteration, helping to prove correctness.</p></details>
+            <details class="glass"><summary>Time and space complexity</summary><p>Asymptotic bounds on operations and extra memory. Fewer checks can improve speed without changing the Big-O class.</p></details>
+          </div>
         </section>
 
         <section class="view" id="view-sources" aria-labelledby="sources-title">
