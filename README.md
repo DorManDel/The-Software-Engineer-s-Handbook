@@ -35,6 +35,7 @@ cc -std=c17 -Wall -Wextra -Wpedantic -Werror pilot/labs/pointer_demo.c -o /tmp/p
 - **Degree Explorer:** all **56 schedule entries** from the published Shenkar four-year B.Sc. curriculum, with year filters and search. Entries are not 56 unique courses and not evidence of personal completion.
 - **Terminal Academy:** in-memory, allowlisted command simulator for Ubuntu/Linux and PowerShell, including modeled `wsl -l -v` and `wsl` transitions. Three guided missions use virtual filesystem-state checks rather than guessing based on typed text. No arbitrary code execution and no real WSL integration.
 - **C Memory Explorer:** interactive symbolic pointer/value lesson with code preview and quiz.
+- **Algorithm Arcade (review branch):** Prime Detective with brute-force / square-root / 6k ± 1 remainder traces, reviewed C/Python/JavaScript examples, a language catalog, and a small concept dictionary. Other language entries are explicitly planned, not runnable.
 - **Source Registry:** public sources with provenance; private Drive references stay out of the site.
 
 ## Educational architecture
@@ -53,7 +54,7 @@ cc -std=c17 -Wall -Wextra -Wpedantic -Werror pilot/labs/pointer_demo.c -o /tmp/p
 
 ## Progress & next steps
 
-See `docs/PILOT_PLAN.md`, `docs/PCM_INTEGRATION.md`, and `docs/TERMINAL_ACADEMY.md`. The next learning module expands the virtual shell with process concepts (`fork`/`exec`/FDs) as *visual state machines*, followed by a controlled optional local companion for real WSL practice.
+See `docs/PILOT_PLAN.md`, `docs/PCM_INTEGRATION.md`, and `docs/TERMINAL_ACADEMY.md`. Algorithm Arcade design and extension notes: `docs/ALGORITHM_ARCADE.md`. The next learning module expands the virtual shell with process concepts (`fork`/`exec`/FDs) as *visual state machines*, followed by a controlled optional local companion for real WSL practice.
 
 ## GitHub Pages publishing
 
