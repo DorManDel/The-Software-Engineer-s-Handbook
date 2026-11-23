@@ -1,4 +1,5 @@
 import {initialTerminalState,executeCommand,promptFor,terminalChallenges,challengeProgress} from './terminal-engine.mjs';
+import {mountAlgorithmArcade} from './algorithm-arcade.mjs';
 
 const $ = (q, root=document) => root.querySelector(q);
 const $$ = (q, root=document) => [...root.querySelectorAll(q)];
@@ -10,7 +11,7 @@ function el(tag, className, txt) {
   return element;
 }
 
-const pages=new Set(['home','curriculum','terminal','pointers','sources']);
+const pages=new Set(['home','curriculum','terminal','pointers','arcade','sources']);
 function navigate(page){
   const active=pages.has(page)?page:'home';
   $$('.view').forEach(x=>x.classList.toggle('active',x.id===`view-${active}`));
@@ -141,3 +142,4 @@ $$('[data-answer]').forEach(b=>b.addEventListener('click',()=>{
   $('#quiz-feedback').className=`small ${correct?'correct-answer':'muted'}`;
 }));
 renderPointers();
+mountAlgorithmArcade();

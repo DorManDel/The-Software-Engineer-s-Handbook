@@ -14,6 +14,8 @@ ALLOWLIST = (
     "styles.css",
     "src/app.mjs",
     "src/terminal-engine.mjs",
+    "src/prime-engine.mjs",
+    "src/algorithm-arcade.mjs",
     "data/public/official_curriculum.json",
     "data/public/public_sources.json",
 )
